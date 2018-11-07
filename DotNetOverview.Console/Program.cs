@@ -11,35 +11,16 @@ namespace DotNetOverview.Console
     static void Main(string[] args)
     {
       var fileList = new DirectoryInfo(".").GetFiles("*.csproj", SearchOption.AllDirectories);
-      var parser = new ProjectParser();
 
-      var projects = fileList.Select(f => parser.Parse(f.FullName));
-
-      PrintStatistics(projects);
-    }
-
-    static void PrintStatistics(IEnumerable<Project> projects)
-    {
-      var nameLabel = "Project";
-      var targetFrameworkLabel = "Target framework";
-      var newCsProjFormatLabel = "New csproj format";
-
-      var maxLengthName = Math.Max(projects.Max(p => p.Name?.Length ?? 0), nameLabel.Length);
-      var maxLengthTargetFramework = Math.Max(projects.Max(p => p.TargetFramework?.Length ?? 0), targetFrameworkLabel.Length);
-
-      var formatString = $"{{0,-{maxLengthName}}} {{1,-{maxLengthTargetFramework}}} {{2,-4}}";
-      System.Console.WriteLine(formatString, nameLabel, targetFrameworkLabel, newCsProjFormatLabel);
-
-      foreach(var project in projects)
+      if (!fileList.Any())
       {
-        System.Console.WriteLine(
-          formatString,
-          project.Name,
-          project.TargetFramework,
-          Format(project.NewCsProjFormat));
+        System.Console.WriteLine("No csproj files found in current directory");
+        return;
       }
+      
+      var parser = new ProjectParser();
+      var projects = fileList.Select(f => parser.Parse(f.FullName));
+      System.Console.WriteLine(Utilities.FormatProjects(projects));
     }
-
-    static string Format(bool? value) => value.HasValue ? value.Value ? "Yes" : "No" : "-";
   }
 }

@@ -3,9 +3,12 @@ WORKDIR /app
 
 # restore
 COPY DotNetOverview.Console/*.csproj ./DotNetOverview.Console/
+COPY DotNetOverview.Console.Tests/*.csproj ./DotNetOverview.Console.Tests/
 COPY DotNetOverview.Library/*.csproj ./DotNetOverview.Library/
 COPY DotNetOverview.Library.Tests/*.csproj ./DotNetOverview.Library.Tests/
 WORKDIR /app/DotNetOverview.Console
+RUN dotnet restore
+WORKDIR /app/DotNetOverview.Console.Tests
 RUN dotnet restore
 WORKDIR /app/DotNetOverview.Library.Tests
 RUN dotnet restore
@@ -21,6 +24,9 @@ RUN dotnet publish -c Release -o out
 FROM build AS testrunner
 WORKDIR /app/DotNetOverview.Library.Tests
 COPY DotNetOverview.Library.Tests/. .
+RUN dotnet test
+WORKDIR /app/DotNetOverview.Console.Tests
+COPY DotNetOverview.Console.Tests/. .
 RUN dotnet test
 
 # run

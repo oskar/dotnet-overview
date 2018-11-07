@@ -24,7 +24,7 @@ namespace DotNetOverview.Console.Tests
     [Fact]
     public void FormatProjects_returns_nothing_on_empty_project_list()
     {
-      Utilities.FormatProjects(new List<Project>());
+      Assert.Equal("", Utilities.FormatProjects(new List<Project>()));
     }
   }
 }

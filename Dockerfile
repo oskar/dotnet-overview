@@ -29,8 +29,12 @@ WORKDIR /app/DotNetOverview.Console.Tests
 COPY DotNetOverview.Console.Tests/. .
 RUN dotnet test
 
-# run
+# copy app
 FROM microsoft/dotnet:2.1-runtime-alpine AS runtime
 WORKDIR /app
 COPY --from=build /app/DotNetOverview.Console/out ./
-ENTRYPOINT ["dotnet", "DotNetOverview.Console.dll"]
+
+# run
+WORKDIR /data
+VOLUME "/data"
+ENTRYPOINT ["dotnet", "/app/DotNetOverview.Console.dll"]

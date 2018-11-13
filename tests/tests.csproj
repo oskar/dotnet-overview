@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DotNetOverview.Console\DotNetOverview.Console.csproj" />
+    <ProjectReference Include="..\src\dotnet-overview.csproj" />
   </ItemGroup>
 
 </Project>

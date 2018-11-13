@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/DotNetOverview.Console/DotNetOverview.Console.csproj"
+                "${workspaceFolder}/src/dotnet-overview.csproj"
             ],
             "problemMatcher": "$msCompile"
         }

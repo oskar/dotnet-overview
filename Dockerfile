@@ -1,40 +1,30 @@
 FROM microsoft/dotnet:2.1-sdk-alpine AS build
-WORKDIR /app
 
 # restore
-COPY DotNetOverview.Console/*.csproj ./DotNetOverview.Console/
-COPY DotNetOverview.Console.Tests/*.csproj ./DotNetOverview.Console.Tests/
-COPY DotNetOverview.Library/*.csproj ./DotNetOverview.Library/
-COPY DotNetOverview.Library.Tests/*.csproj ./DotNetOverview.Library.Tests/
-WORKDIR /app/DotNetOverview.Console
+WORKDIR /src
+COPY src/*.csproj .
 RUN dotnet restore
-WORKDIR /app/DotNetOverview.Console.Tests
-RUN dotnet restore
-WORKDIR /app/DotNetOverview.Library.Tests
+WORKDIR /tests
+COPY tests/*.csproj .
 RUN dotnet restore
 
 # build
-WORKDIR /app/
-COPY DotNetOverview.Console/. ./DotNetOverview.Console/
-COPY DotNetOverview.Library/. ./DotNetOverview.Library/
-WORKDIR /app/DotNetOverview.Console
+WORKDIR /src
+COPY src/. .
 RUN dotnet publish -c Release -o out
 
 # test
 FROM build AS testrunner
-WORKDIR /app/DotNetOverview.Library.Tests
-COPY DotNetOverview.Library.Tests/. .
-RUN dotnet test
-WORKDIR /app/DotNetOverview.Console.Tests
-COPY DotNetOverview.Console.Tests/. .
+WORKDIR /tests
+COPY tests/. .
 RUN dotnet test
 
 # copy app
 FROM microsoft/dotnet:2.1-runtime-alpine AS runtime
 WORKDIR /app
-COPY --from=build /app/DotNetOverview.Console/out ./
+COPY --from=build /src/out ./
 
 # run
 WORKDIR /data
 VOLUME "/data"
-ENTRYPOINT ["dotnet", "/app/DotNetOverview.Console.dll"]
+ENTRYPOINT ["dotnet", "/app/dotnet-overview.dll"]

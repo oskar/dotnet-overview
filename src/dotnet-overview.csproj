@@ -4,6 +4,13 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <PackAsTool>true</PackAsTool>
+    <Version>0.1.0</Version>
+    <Description>Display overview of all csproj files in a directory</Description>
+    <Authors>Oskar Hermansson</Authors>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="McMaster.Extensions.CommandLineUtils" Version="2.2.5" />
+  </ItemGroup>
 
 </Project>

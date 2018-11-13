@@ -1,7 +1,7 @@
 using System;
 using Xunit;
 
-namespace DotNetOverview.Library.Tests
+namespace DotNetOverview.Tests
 {
   public class ProjectParserTests
   {

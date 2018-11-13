@@ -5,9 +5,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Xml.Linq;
-using DotNetOverview.Library;
 
-namespace DotNetOverview.Console
+namespace DotNetOverview
 {
   public class Utilities
   {

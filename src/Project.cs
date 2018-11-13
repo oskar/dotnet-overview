@@ -1,4 +1,4 @@
-namespace DotNetOverview.Library
+namespace DotNetOverview
 {
   public class Project
   {

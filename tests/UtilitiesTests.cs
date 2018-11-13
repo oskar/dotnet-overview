@@ -1,9 +1,8 @@
 using System;
 using System.Collections.Generic;
-using DotNetOverview.Library;
 using Xunit;
 
-namespace DotNetOverview.Console.Tests
+namespace DotNetOverview.Tests
 {
   public class UtilitiesTests
   {

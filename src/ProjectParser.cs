@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Xml.Linq;
 
-namespace DotNetOverview.Library
+namespace DotNetOverview
 {
   public class ProjectParser
   {

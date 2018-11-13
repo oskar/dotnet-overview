@@ -3,6 +3,18 @@ A .NET Core global tool to display a simple overview of all projects in a direct
 
 ## Docker
 
-To scan current directory ($PWD) run this command:
+This tool is not yet published to Docker Hub so you'll need to build the docker image yourself:
 
-`$ docker run -v $PWD:/data dotnet-overview`
+`docker build -t dotnet-overview .`
+
+To scan current directory ($PWD) run this:
+
+`docker run -v $PWD:/data dotnet-overview`
+
+## .NET Core Global Tool
+
+This tool is not yet published to NuGet Gallery, but to install it as a Global Tool, run:
+
+`./globaltool-reinstall-local.sh`
+
+And then run either `dotnet-overview` or `dotnet overview` from any directory you want to scan.

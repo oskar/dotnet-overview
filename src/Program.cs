@@ -32,11 +32,17 @@ namespace DotNetOverview
         Path = ".";
       }
 
+      if (!Directory.Exists(Path))
+      {
+        Console.WriteLine("Path does not exist: " + Path);
+        return;
+      }
+
       var files = new DirectoryInfo(Path).GetFiles("*.csproj", SearchOption.AllDirectories);
 
       if (files.Length == 0)
       {
-        Console.WriteLine("No csproj files found in current directory");
+        Console.WriteLine("No csproj files found in path");
         return;
       }
 

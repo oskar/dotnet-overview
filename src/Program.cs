@@ -23,6 +23,9 @@ namespace DotNetOverview
     [Option(Description = "Show absolute paths instead of relative")]
     public bool AbsolutePaths { get; }
 
+    [Option(Description = "Show number of projects found")]
+    public bool Count { get; }
+
     private void OnExecute()
     {
       if (Version)
@@ -48,7 +51,7 @@ namespace DotNetOverview
 
       if (files.Length == 0)
       {
-        Console.WriteLine("No csproj files found in path");
+        Console.WriteLine("No csproj files found in path.");
         return;
       }
 
@@ -62,6 +65,11 @@ namespace DotNetOverview
       var parser = new ProjectParser(basePath);
       var projects = files.Select(f => parser.Parse(f.FullName));
       Console.WriteLine(Utilities.FormatProjects(projects, ShowPaths));
+
+      if(Count)
+      {
+        Console.WriteLine($"Found {files.Length} project(s).");
+      }
     }
   }
 }

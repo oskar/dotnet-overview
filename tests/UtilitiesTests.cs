@@ -7,24 +7,24 @@ namespace DotNetOverview.Tests
   public class UtilitiesTests
   {
     [Fact]
-    public void FormatBoolean_returns_correct_string()
-    {
+    public void FormatBoolean_return_dash_on_null() =>
       Assert.Equal("-", Utilities.FormatBoolean(null));
+
+    [Fact]
+    public void FormatBoolean_return_yes_on_true() =>
       Assert.Equal("Yes", Utilities.FormatBoolean(true));
+
+    [Fact]
+    public void FormatBoolean_returns_no_on_false() =>
       Assert.Equal("No", Utilities.FormatBoolean(false));
-    }
 
     [Fact]
-    public void FormatProjects_throws_on_missing_argument()
-    {
+    public void FormatProjects_throws_on_missing_argument() =>
       Assert.Throws<ArgumentNullException>(() => Utilities.FormatProjects(null));
-    }
 
     [Fact]
-    public void FormatProjects_returns_nothing_on_empty_project_list()
-    {
+    public void FormatProjects_returns_nothing_on_empty_project_list() =>
       Assert.Equal("", Utilities.FormatProjects(new List<Project>()));
-    }
 
     [Fact]
     public void FormatProjects_uses_space_as_separator()
@@ -57,16 +57,16 @@ namespace DotNetOverview.Tests
     }
 
     [Fact]
-    public void FormatRows_throws_on_missing_argument()
-      => Assert.Throws<ArgumentNullException>(() => Utilities.FormatRows(null));
+    public void FormatRows_throws_on_missing_argument() =>
+      Assert.Throws<ArgumentNullException>(() => Utilities.FormatRows(null));
 
     [Fact]
-    public void FormatRows_returns_nothing_on_empty_rows()
-      => Assert.Equal("", Utilities.FormatRows(new string[0][]));
+    public void FormatRows_returns_nothing_on_empty_rows() =>
+      Assert.Equal("", Utilities.FormatRows(new string[0][]));
 
     [Fact]
-    public void FormatRows_uses_specified_separator()
-      => Assert.Equal("1*2*3", Utilities.FormatRows(new string[][] { new [] { "1", "2", "3" } }, "*"));
+    public void FormatRows_uses_specified_separator() =>
+      Assert.Equal("1*2*3", Utilities.FormatRows(new string[][] { new[] { "1", "2", "3" } }, "*"));
 
     [Fact]
     public void FormatRows_pads_with_spaces()

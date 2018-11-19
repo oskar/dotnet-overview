@@ -10,34 +10,30 @@ namespace DotNetOverview
 {
   public class Utilities
   {
-    public static string FormatProjects(IEnumerable<Project> projects)
+    public static string FormatProjects(IEnumerable<Project> projects, bool showPath = false)
     {
-      if(!projects.Any())
+      if (!projects.Any())
         return string.Empty;
 
-      var nameLabel = "Project";
-      var targetFrameworkLabel = "Target framework";
-      var newCsProjFormatLabel = "New csproj format";
+      var rows = new List<string[]>();
+      rows.Add(new string[] { "Project", "Target framework", "New csproj format" });
+      rows.AddRange(projects.Select(p => new string[] { showPath ? p.Path : p.Name, p.TargetFramework, FormatBoolean(p.NewCsProjFormat) }));
 
-      var maxLengthName = Math.Max(projects.Max(p => p.Name?.Length ?? 0), nameLabel.Length);
-      var maxLengthTargetFramework = Math.Max(projects.Max(p => p.TargetFramework?.Length ?? 0), targetFrameworkLabel.Length);
-
-      var formatString = $"{{0,-{maxLengthName}}} {{1,-{maxLengthTargetFramework}}} {{2,-4}}";
-      System.Console.WriteLine(formatString, nameLabel, targetFrameworkLabel, newCsProjFormatLabel);
-
-      var sb = new StringBuilder();
-
-      foreach(var project in projects)
-      {
-        sb.AppendLine(string.Format(formatString,
-          project.Name,
-          project.TargetFramework,
-          FormatBoolean(project.NewCsProjFormat)));
-      }
-
-      return sb.ToString();
+      return FormatRows(rows.ToArray());
     }
 
     public static string FormatBoolean(bool? value) => value.HasValue ? value.Value ? "Yes" : "No" : "-";
+
+    public static string FormatRows(string[][] rows, string separator = " ")
+    {
+      if (!rows.Any())
+        return string.Empty;
+
+      var formatString = string.Join(separator, Enumerable
+                                                  .Range(0, rows.First().Length)
+                                                  .Select(i => $"{{{i},-{rows.Max(r => r[i]?.Length ?? 0)}}}"));
+
+      return string.Join(Environment.NewLine, rows.Select(row => string.Format(formatString, row)));
+    }
   }
 }

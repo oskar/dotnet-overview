@@ -8,6 +8,13 @@ namespace DotNetOverview
 {
   public class ProjectParser
   {
+    private string basePath_;
+
+    public ProjectParser(string basePath = null)
+    {
+      basePath_ = basePath;
+    }
+
     private readonly XNamespace _msbuildNamespace = "http://schemas.microsoft.com/developer/msbuild/2003";
 
     public Project Parse(string projectFilePath)
@@ -19,7 +26,7 @@ namespace DotNetOverview
         throw new ArgumentException(string.Format("Project file does not exist ({0})", projectFilePath), "projectFilePath");
 
       var project = new Project();
-      project.Path = projectFilePath;
+      project.Path = string.IsNullOrEmpty(basePath_) ? projectFilePath : Path.GetRelativePath(basePath_, projectFilePath);
       project.Name = Path.GetFileNameWithoutExtension(projectFilePath);
 
       var xmlDoc = XDocument.Load(projectFilePath);
@@ -29,7 +36,7 @@ namespace DotNetOverview
       var newCsProjFormat = IsNewCsProjFormat(xmlDoc);
       project.NewCsProjFormat = newCsProjFormat;
 
-      if(newCsProjFormat)
+      if (newCsProjFormat)
       {
         project.TargetFramework =
           GetPropertyValue(xmlDoc, "TargetFramework") ??
@@ -54,7 +61,7 @@ namespace DotNetOverview
           ?.Select(v => v.Value)
           ?.FirstOrDefault();
 
-      if(!string.IsNullOrEmpty(value))
+      if (!string.IsNullOrEmpty(value))
         return value;
 
       return document.Element("Project")

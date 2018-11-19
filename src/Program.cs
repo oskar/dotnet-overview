@@ -17,6 +17,12 @@ namespace DotNetOverview
     [Option(Description = "Print version of this tool and exit")]
     public bool Version { get; }
 
+    [Option(Description = "Show project file paths instead of name", ShortName = "p")]
+    public bool ShowPaths { get; }
+
+    [Option(Description = "Show absolute paths instead of relative")]
+    public bool AbsolutePaths { get; }
+
     private void OnExecute()
     {
       if (Version)
@@ -52,9 +58,10 @@ namespace DotNetOverview
         return;
       }
 
-      var parser = new ProjectParser();
+      var basePath = AbsolutePaths ? null : Path;
+      var parser = new ProjectParser(basePath);
       var projects = files.Select(f => parser.Parse(f.FullName));
-      Console.WriteLine(Utilities.FormatProjects(projects));
+      Console.WriteLine(Utilities.FormatProjects(projects, ShowPaths));
     }
   }
 }

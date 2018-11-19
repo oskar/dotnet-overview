@@ -6,20 +6,15 @@ namespace DotNetOverview.Tests
   public class ProjectParserTests
   {
     [Fact]
-    public void Parse_throws_exception_on_missing_argument()
-    {
-      var parser = new ProjectParser();
-
-      Assert.Throws<ArgumentNullException>(() => parser.Parse(null));
-      Assert.Throws<ArgumentNullException>(() => parser.Parse(""));
-    }
+    public void Parse_throws_on_null() =>
+      Assert.Throws<ArgumentNullException>(() => new ProjectParser().Parse(null));
 
     [Fact]
-    public void Parse_throws_exception_on_missing_file()
-    {
-      var parser = new ProjectParser();
+    public void Parse_throws_on_empty_argument() =>
+      Assert.Throws<ArgumentNullException>(() => new ProjectParser().Parse(""));
 
-      Assert.Throws<ArgumentException>(() => parser.Parse("thisfiledoesnotexist.csproj"));
-    }
+    [Fact]
+    public void Parse_throws_on_missing_file() =>
+      Assert.Throws<ArgumentException>(() => new ProjectParser().Parse("thisfiledoesnotexist.csproj"));
   }
 }

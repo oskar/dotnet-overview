@@ -63,7 +63,10 @@ namespace DotNetOverview
 
       var basePath = AbsolutePaths ? null : Path;
       var parser = new ProjectParser(basePath);
-      var projects = files.Select(f => parser.Parse(f.FullName));
+      var projects = files
+        .Select(f => f.FullName)
+        .OrderBy(f => f)
+        .Select(parser.Parse);
       Console.WriteLine(Utilities.FormatProjects(projects, ShowPaths));
 
       if(Count)

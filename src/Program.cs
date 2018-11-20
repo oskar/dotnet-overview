@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using McMaster.Extensions.CommandLineUtils;
+using Newtonsoft.Json;
 
 namespace DotNetOverview
 {
@@ -25,6 +26,9 @@ namespace DotNetOverview
 
     [Option(Description = "Show number of projects found")]
     public bool Count { get; }
+
+    [Option(Description = "Format the result as JSON")]
+    public bool Json { get; }
 
     private void OnExecute()
     {
@@ -67,9 +71,17 @@ namespace DotNetOverview
         .Select(f => f.FullName)
         .OrderBy(f => f)
         .Select(parser.Parse);
-      Console.WriteLine(Utilities.FormatProjects(projects, ShowPaths));
 
-      if(Count)
+      if (Json)
+      {
+        Console.WriteLine(JsonConvert.SerializeObject(projects, Formatting.Indented));
+      }
+      else
+      {
+        Console.WriteLine(Utilities.FormatProjects(projects, ShowPaths));
+      }
+
+      if (Count)
       {
         Console.WriteLine($"Found {files.Length} project(s).");
       }

@@ -18,3 +18,5 @@ This tool is not yet published to NuGet Gallery, but to install it as a Global T
 `./globaltool-reinstall-local.sh`
 
 And then run either `dotnet-overview` or `dotnet overview` from any directory you want to scan.
+
+test

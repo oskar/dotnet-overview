@@ -18,3 +18,19 @@ This tool is not yet published to NuGet Gallery, but to install it as a Global T
 `./globaltool-reinstall-local.sh`
 
 And then run either `dotnet-overview` or `dotnet overview` from any directory you want to scan.
+
+## Advanced usage
+
+Some examples using PowerShell to filter the output. Note the parentheses.
+
+Show project(s) which exactly maches name:
+
+`(dotnet overview -j | ConvertFrom-Json) | where Name -eq 'dotnet-overview'`
+
+Show only projects with names matching pattern:
+
+`(dotnet overview -j | ConvertFrom-Json) | where Name -like 'tes*'`
+
+Show projects which does not use the new SDK csproj format:
+
+`(dotnet overview -j | ConvertFrom-Json) | where -not NewCsProjFormat`

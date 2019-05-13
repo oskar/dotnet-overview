@@ -59,12 +59,6 @@ namespace DotNetOverview
         return;
       }
 
-      if (files.Length > 100 &&
-          !Prompt.GetYesNo("Found more than 100 csproj files. Do you want to proceed?", true))
-      {
-        return;
-      }
-
       var basePath = AbsolutePaths ? null : Path;
       var parser = new ProjectParser(basePath);
       var projects = files

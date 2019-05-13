@@ -31,6 +31,6 @@ Show only projects with names matching pattern:
 
 `(dotnet overview -j | ConvertFrom-Json) | where Name -like 'tes*'`
 
-Show projects which does not use the new SDK csproj format:
+Group by target framework all projects not using the new SDK csproj format and sort by count descending:
 
-`(dotnet overview -j | ConvertFrom-Json) | where -not NewCsProjFormat`
+`(dotnet overview -j | ConvertFrom-Json) | where NewCsProjFormat -eq $false | select TargetFramework | group -Property TargetFramework -NoElement | sort -Property Count -Descending`

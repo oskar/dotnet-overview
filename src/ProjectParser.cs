@@ -47,6 +47,18 @@ namespace DotNetOverview
         project.TargetFramework = GetPropertyValue(xmlDoc, "TargetFrameworkVersion");
       }
 
+      project.OutputType = GetPropertyValue(xmlDoc, "OutputType");
+      project.Authors = GetPropertyValue(xmlDoc, "Authors");
+
+      project.Version = GetPropertyValue(xmlDoc, "Version");
+      if (string.IsNullOrWhiteSpace(project.Version))
+      {
+        var prefix = GetPropertyValue(xmlDoc, "VersionPrefix");
+        var suffix = GetPropertyValue(xmlDoc, "VersionSuffix");
+
+        project.Version = string.IsNullOrWhiteSpace(suffix) ? prefix : $"{prefix}-{suffix}";
+      }
+
       return project;
     }
 

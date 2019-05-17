@@ -8,5 +8,8 @@ namespace DotNetOverview
 
     public string TargetFramework { get; set; }
     public bool? TreatWarningsAsErrors { get; set; }
+    public string OutputType { get; set; }
+    public string Authors { get; set; }
+    public string Version { get; set; }
   }
 }

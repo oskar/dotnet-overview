@@ -24,5 +24,17 @@ namespace DotNetOverview.Tests
     [Fact]
     public void Constructor_creates_object_without_default_value_for_TreatWarningsAsErrors() =>
       Assert.Null(new Project().TreatWarningsAsErrors);
+
+    [Fact]
+    public void Constructor_creates_object_without_default_value_for_OutputType() =>
+      Assert.Null(new Project().OutputType);
+
+    [Fact]
+    public void Constructor_creates_object_without_default_value_for_Authors() =>
+      Assert.Null(new Project().Authors);
+
+    [Fact]
+    public void Constructor_creates_object_without_default_value_for_Version() =>
+      Assert.Null(new Project().Version);
   }
 }

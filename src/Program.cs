@@ -3,14 +3,18 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using McMaster.Extensions.CommandLineUtils;
+using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 
 namespace DotNetOverview
 {
   class Program
   {
-    public static int Main(string[] args) => CommandLineApplication.Execute<Program>(args);
+    private readonly IConsole _console;
+
+    static Task<int> Main(string[] args) => new HostBuilder().RunCommandLineApplicationAsync<Program>(args);
 
     [Argument(0, Description = "Path to search. Defaults to current working directory")]
     public string Path { get; private set; }
@@ -30,12 +34,17 @@ namespace DotNetOverview
     [Option(Description = "Format the result as JSON")]
     public bool Json { get; }
 
+    public Program(IConsole console)
+    {
+      _console = console;
+    }
+
     private void OnExecute()
     {
       if (Version)
       {
         var attribute = Assembly.GetEntryAssembly().GetCustomAttribute<AssemblyInformationalVersionAttribute>();
-        Console.WriteLine($"{attribute.InformationalVersion}");
+        _console.WriteLine($"{attribute.InformationalVersion}");
         return;
       }
 
@@ -47,7 +56,7 @@ namespace DotNetOverview
 
       if (!Directory.Exists(Path))
       {
-        Console.WriteLine("Path does not exist: " + Path);
+        _console.WriteLine("Path does not exist: " + Path);
         return;
       }
 
@@ -55,7 +64,7 @@ namespace DotNetOverview
 
       if (files.Length == 0)
       {
-        Console.WriteLine("No csproj files found in path.");
+        _console.WriteLine("No csproj files found in path.");
         return;
       }
 
@@ -68,16 +77,16 @@ namespace DotNetOverview
 
       if (Json)
       {
-        Console.WriteLine(JsonConvert.SerializeObject(projects, Formatting.Indented));
+        _console.WriteLine(JsonConvert.SerializeObject(projects, Formatting.Indented));
       }
       else
       {
-        Console.WriteLine(Utilities.FormatProjects(projects, ShowPaths));
+        _console.WriteLine(Utilities.FormatProjects(projects, ShowPaths));
       }
 
       if (Count)
       {
-        Console.WriteLine($"Found {files.Length} project(s).");
+        _console.WriteLine($"Found {files.Length} project(s).");
       }
     }
   }

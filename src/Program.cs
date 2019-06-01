@@ -10,36 +10,36 @@ using Newtonsoft.Json;
 
 namespace DotNetOverview
 {
-  class Program
+  public class Program
   {
     private readonly IConsole _console;
 
     static Task<int> Main(string[] args) => new HostBuilder().RunCommandLineApplicationAsync<Program>(args);
 
     [Argument(0, Description = "Path to search. Defaults to current working directory")]
-    public string Path { get; private set; }
+    public string Path { get; set; }
 
     [Option(Description = "Print version of this tool and exit")]
-    public bool Version { get; }
+    public bool Version { get; set; }
 
     [Option(Description = "Show project file paths instead of name", ShortName = "p")]
-    public bool ShowPaths { get; }
+    public bool ShowPaths { get; set; }
 
     [Option(Description = "Show absolute paths instead of relative")]
-    public bool AbsolutePaths { get; }
+    public bool AbsolutePaths { get; set; }
 
     [Option(Description = "Show number of projects found")]
-    public bool Count { get; }
+    public bool Count { get; set; }
 
     [Option(Description = "Format the result as JSON")]
-    public bool Json { get; }
+    public bool Json { get; set; }
 
     public Program(IConsole console)
     {
       _console = console;
     }
 
-    private void OnExecute()
+    public void OnExecute()
     {
       if (Version)
       {

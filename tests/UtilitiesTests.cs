@@ -30,11 +30,11 @@ namespace DotNetOverview.Tests
     public void FormatProjects_uses_space_as_separator()
     {
       // Arrange
-      var expected = "Project Target framework New csproj format" + Environment.NewLine +
-                     "proj    dotnetcore       Yes              ";
+      var expected = "Project Target framework SDK format" + Environment.NewLine +
+                     "proj    dotnetcore       Yes       ";
       var projects = new List<Project>
       {
-        new Project { Name = "proj", TargetFramework = "dotnetcore", NewCsProjFormat = true }
+        new Project { Name = "proj", TargetFramework = "dotnetcore", SdkFormat = true }
       };
 
       // Act and assert
@@ -45,8 +45,8 @@ namespace DotNetOverview.Tests
     public void FormatProjects_uses_path_instead_of_name_if_specified()
     {
       // Arrange
-      var expected = "Project             Target framework New csproj format" + Environment.NewLine +
-                     "path/to/file.csproj something        -                ";
+      var expected = "Project             Target framework SDK format" + Environment.NewLine +
+                     "path/to/file.csproj something        -         ";
       var projects = new List<Project>
       {
         new Project { Path = "path/to/file.csproj", TargetFramework = "something" }

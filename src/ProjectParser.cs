@@ -33,10 +33,10 @@ namespace DotNetOverview
       if (xmlDoc == null)
         return project;
 
-      var newCsProjFormat = IsNewCsProjFormat(xmlDoc);
-      project.NewCsProjFormat = newCsProjFormat;
+      var sdkFormat = IsSdkFormat(xmlDoc);
+      project.SdkFormat = sdkFormat;
 
-      if (newCsProjFormat)
+      if (sdkFormat)
       {
         project.TargetFramework =
           GetPropertyValue(xmlDoc, "TargetFramework") ??
@@ -62,7 +62,7 @@ namespace DotNetOverview
       return project;
     }
 
-    private bool IsNewCsProjFormat(XDocument document) =>
+    private bool IsSdkFormat(XDocument document) =>
       !string.IsNullOrEmpty(document.Element("Project")?.Attribute("Sdk")?.Value);
 
     private string GetPropertyValue(XDocument document, string property)

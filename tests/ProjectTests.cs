@@ -14,8 +14,8 @@ namespace DotNetOverview.Tests
       Assert.Null(new Project().Path);
 
     [Fact]
-    public void Constructor_creates_object_without_default_value_for_NewCsProjFormat() =>
-      Assert.Null(new Project().NewCsProjFormat);
+    public void Constructor_creates_object_without_default_value_for_SdkFormat() =>
+      Assert.Null(new Project().SdkFormat);
 
     [Fact]
     public void Constructor_creates_object_without_default_value_for_TargetFramework() =>

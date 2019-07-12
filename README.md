@@ -29,4 +29,4 @@ Show only projects with names matching pattern:
 
 Group by target framework all projects not using the new SDK csproj format and sort by count descending:
 
-`(dotnet overview -j | ConvertFrom-Json) | where NewCsProjFormat -eq $false | select TargetFramework | group -Property TargetFramework -NoElement | sort -Property Count -Descending`
+`(dotnet overview -j | ConvertFrom-Json) | where SdkFormat -eq $false | select TargetFramework | group -Property TargetFramework -NoElement | sort -Property Count -Descending`

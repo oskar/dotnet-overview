@@ -16,8 +16,8 @@ namespace DotNetOverview
         return string.Empty;
 
       var rows = new List<string[]>();
-      rows.Add(new string[] { "Project", "Target framework", "New csproj format" });
-      rows.AddRange(projects.Select(p => new string[] { showPath ? p.Path : p.Name, p.TargetFramework, FormatBoolean(p.NewCsProjFormat) }));
+      rows.Add(new string[] { "Project", "Target framework", "SDK format" });
+      rows.AddRange(projects.Select(p => new string[] { showPath ? p.Path : p.Name, p.TargetFramework, FormatBoolean(p.SdkFormat) }));
 
       return FormatRows(rows.ToArray());
     }

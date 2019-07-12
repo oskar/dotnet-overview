@@ -1,23 +1,19 @@
 # dotnet-overview
 A .NET Core global tool to display a simple overview of all projects in a directory, with information such as target framework.
 
-## Docker
+## Installation
 
-This tool is not yet published to Docker Hub so you'll need to build the docker image yourself:
+Install: `dotnet tool install -g dotnet-overview`
 
-`docker build -t dotnet-overview .`
+Update: `dotnet tool update -g dotnet-overview`
 
-To scan current directory ($PWD) run this:
+Uninstall: `dotnet tool uninstall -g dotnet-overview`
 
-`docker run -v $PWD:/data dotnet-overview`
+## Usage
 
-## .NET Core Global Tool
+Run `dotnet overview` in any directory that contains .csproj files to print an overview.
 
-This tool is not yet published to NuGet Gallery, but to install it as a Global Tool, run:
-
-`./globaltool-reinstall-local.sh`
-
-And then run either `dotnet-overview` or `dotnet overview` from any directory you want to scan.
+Run `dotnet overview -h` to see options and usage.
 
 ## Advanced usage
 
@@ -25,11 +21,11 @@ Some examples using PowerShell to filter the output. Note the parentheses.
 
 Show project(s) which exactly maches name:
 
-`(dotnet overview -j | ConvertFrom-Json) | where Name -eq 'dotnet-overview'`
+`(dotnet overview -j | ConvertFrom-Json) | where Name -eq 'MyProject'`
 
 Show only projects with names matching pattern:
 
-`(dotnet overview -j | ConvertFrom-Json) | where Name -like 'tes*'`
+`(dotnet overview -j | ConvertFrom-Json) | where Name -like 'test*'`
 
 Group by target framework all projects not using the new SDK csproj format and sort by count descending:
 

@@ -16,7 +16,7 @@ namespace DotNetOverview.Tests
       // Arrange
       var semVerPattern = @"^\d+\.\d+\.\d+$";
 
-      var console = CreateConsole();
+      var console = CreateMockConsole();
       var program = new Program(console);
       program.Version = true;
       
@@ -31,7 +31,7 @@ namespace DotNetOverview.Tests
     public void Checks_for_invalid_path()
     {
       // Arrange
-      var console = CreateConsole();
+      var console = CreateMockConsole();
       var program = new Program(console);
       program.Path = "apaththatdoesnotexist";
       Assert.False(Directory.Exists(program.Path), $"Test prerequisite failed: Path '{program.Path}' should not exist");
@@ -47,9 +47,9 @@ namespace DotNetOverview.Tests
     public void Stops_if_no_csproj_files_found()
     {
       // Arrange
-      var console = CreateConsole();
+      var console = CreateMockConsole();
       var program = new Program(console);
-      program.Path = "."; // no csproj files exist in working dir which is "tests/bin/Debug/netcoreapp2.1"
+      program.Path = "."; // no csproj files exist in working dir which is "tests/bin/Debug/netcoreapp3.1"
       Assert.True(Directory.Exists(program.Path), $"Test prerequisite failed: Path '{program.Path}' should exist");
       
       // Act
@@ -64,10 +64,9 @@ namespace DotNetOverview.Tests
     public void Prints_json_if_requested()
     {
       // Arrange
-      var console = CreateConsole();
+      var console = CreateMockConsole();
       var program = new Program(console);
       program.Path = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.Parent.ToString();
-      System.Console.WriteLine(program.Path);
       program.Json = true;
       Assert.True(Directory.Exists(program.Path), $"Test prerequisite failed: Path '{program.Path}' should exist");
       
@@ -79,7 +78,7 @@ namespace DotNetOverview.Tests
       console.Out.Received(1).WriteLine(Arg.Any<string>());
     }
 
-    private bool IsJson(string s)
+    private static bool IsJson(string s)
     {
       try
       {
@@ -92,7 +91,7 @@ namespace DotNetOverview.Tests
       }
     }
 
-    private IConsole CreateConsole()
+    private static IConsole CreateMockConsole()
     {
       var console = Substitute.For<IConsole>();
       console.Out.Returns(Substitute.For<TextWriter>());

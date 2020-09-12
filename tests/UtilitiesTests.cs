@@ -66,12 +66,12 @@ namespace DotNetOverview.Tests
 
     [Fact]
     public void FormatRows_uses_specified_separator() =>
-      Assert.Equal("1*2*3", Utilities.FormatRows(new string[][] { new[] { "1", "2", "3" } }, "*"));
+      Assert.Equal("1*2*3", Utilities.FormatRows(new[] { new[] { "1", "2", "3" } }, "*"));
 
     [Fact]
     public void FormatRows_pads_with_spaces()
     {
-      var rows = new string[][]
+      var rows = new[]
       {
         new [] { "first", "second", "third" },
         new [] { "1", "2", "3" }

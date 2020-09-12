@@ -1,11 +1,8 @@
-using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using McMaster.Extensions.CommandLineUtils;
-using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 
 namespace DotNetOverview
@@ -14,7 +11,7 @@ namespace DotNetOverview
   {
     private readonly IConsole _console;
 
-    static Task<int> Main(string[] args) => new HostBuilder().RunCommandLineApplicationAsync<Program>(args);
+    static Task<int> Main(string[] args) => CommandLineApplication.ExecuteAsync<Program>(args);
 
     [Argument(0, Description = "Path to search. Defaults to current working directory")]
     public string Path { get; set; }

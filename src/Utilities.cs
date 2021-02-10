@@ -1,23 +1,18 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
 using System.Linq;
-using System.Text;
-using System.Xml.Linq;
 
 namespace DotNetOverview
 {
-  public class Utilities
+  public static class Utilities
   {
     public static string FormatProjects(IEnumerable<Project> projects, bool showPath = false)
     {
       if (!projects.Any())
         return string.Empty;
 
-      var rows = new List<string[]>();
-      rows.Add(new string[] { "Project", "Target framework", "SDK format" });
-      rows.AddRange(projects.Select(p => new string[] { showPath ? p.Path : p.Name, p.TargetFramework, FormatBoolean(p.SdkFormat) }));
+      var rows = new List<string[]> { new[] { "Project", "Target framework", "SDK format" } };
+      rows.AddRange(projects.Select(p => new[] { showPath ? p.Path : p.Name, p.TargetFramework, FormatBoolean(p.SdkFormat) }));
 
       return FormatRows(rows.ToArray());
     }

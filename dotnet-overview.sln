@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26124.0
+MinimumVisualStudioVersion = 15.0.26124.0
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dotnet-overview", "src\dotnet-overview.csproj", "{301C4E98-F9A9-4817-B94D-980EDDBD35B6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tests", "tests\tests.csproj", "{173BA2B6-34A1-4019-9B0D-32B65E16CEF1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{301C4E98-F9A9-4817-B94D-980EDDBD35B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{301C4E98-F9A9-4817-B94D-980EDDBD35B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{301C4E98-F9A9-4817-B94D-980EDDBD35B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{301C4E98-F9A9-4817-B94D-980EDDBD35B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{173BA2B6-34A1-4019-9B0D-32B65E16CEF1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{173BA2B6-34A1-4019-9B0D-32B65E16CEF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{173BA2B6-34A1-4019-9B0D-32B65E16CEF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{173BA2B6-34A1-4019-9B0D-32B65E16CEF1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

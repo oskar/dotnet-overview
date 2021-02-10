@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Xml.Linq;
@@ -8,11 +7,11 @@ namespace DotNetOverview
 {
   public class ProjectParser
   {
-    private string basePath_;
+    private readonly string _basePath;
 
     public ProjectParser(string basePath = null)
     {
-      basePath_ = basePath;
+      _basePath = basePath;
     }
 
     private readonly XNamespace _msbuildNamespace = "http://schemas.microsoft.com/developer/msbuild/2003";
@@ -23,16 +22,15 @@ namespace DotNetOverview
         throw new ArgumentNullException(nameof(projectFilePath));
 
       if (!File.Exists(projectFilePath))
-        throw new ArgumentException(string.Format("Project file does not exist ({0})", projectFilePath), "projectFilePath");
+        throw new ArgumentException($"Project file does not exist ({projectFilePath})", nameof(projectFilePath));
 
-      var project = new Project();
-      project.Path = string.IsNullOrEmpty(basePath_) ? projectFilePath : Path.GetRelativePath(basePath_, projectFilePath);
-      project.Name = Path.GetFileNameWithoutExtension(projectFilePath);
+      var project = new Project
+      {
+        Path = string.IsNullOrEmpty(_basePath) ? projectFilePath : Path.GetRelativePath(_basePath, projectFilePath),
+        Name = Path.GetFileNameWithoutExtension(projectFilePath)
+      };
 
       var xmlDoc = XDocument.Load(projectFilePath);
-      if (xmlDoc == null)
-        return project;
-
       var sdkFormat = IsSdkFormat(xmlDoc);
       project.SdkFormat = sdkFormat;
 
@@ -62,25 +60,25 @@ namespace DotNetOverview
       return project;
     }
 
-    private bool IsSdkFormat(XDocument document) =>
+    private static bool IsSdkFormat(XDocument document) =>
       !string.IsNullOrEmpty(document.Element("Project")?.Attribute("Sdk")?.Value);
 
     private string GetPropertyValue(XDocument document, string property)
     {
       var value = document.Element(_msbuildNamespace + "Project")
-          ?.Elements(_msbuildNamespace + "PropertyGroup")
-          ?.Elements(_msbuildNamespace + property)
-          ?.Select(v => v.Value)
-          ?.FirstOrDefault();
+        ?.Elements(_msbuildNamespace + "PropertyGroup")
+        .Elements(_msbuildNamespace + property)
+        ?.Select(v => v.Value)
+        .FirstOrDefault();
 
       if (!string.IsNullOrEmpty(value))
         return value;
 
       return document.Element("Project")
         ?.Elements("PropertyGroup")
-        ?.Elements(property)
+        .Elements(property)
         ?.Select(v => v.Value)
-        ?.FirstOrDefault();
+        .FirstOrDefault();
     }
   }
 }

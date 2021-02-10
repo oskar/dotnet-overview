@@ -40,7 +40,7 @@ namespace DotNetOverview
     {
       if (Version)
       {
-        var attribute = Assembly.GetEntryAssembly().GetCustomAttribute<AssemblyInformationalVersionAttribute>();
+        var attribute = Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyInformationalVersionAttribute>();
         _console.WriteLine($"{attribute.InformationalVersion}");
         return;
       }

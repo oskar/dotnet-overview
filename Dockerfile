@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/core/sdk:3.1-alpine AS build
+FROM mcr.microsoft.com/dotnet/sdk:5.0-alpine AS build
 
 # restore
 WORKDIR /src
@@ -20,7 +20,7 @@ COPY tests/. .
 RUN dotnet test
 
 # copy app
-FROM mcr.microsoft.com/dotnet/core/runtime:3.1-alpine AS runtime
+FROM mcr.microsoft.com/dotnet/runtime:5.0-alpine AS runtime
 WORKDIR /app
 COPY --from=build /src/out ./
 

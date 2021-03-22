@@ -1,0 +1,13 @@
+name: "Build and test"
+on: [pull_request]
+jobs:
+  build-and-test:
+    name: "Build and test"
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '3.1.x'
+    - run: dotnet build
+    - run: dotnet test

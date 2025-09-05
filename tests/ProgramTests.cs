@@ -14,7 +14,7 @@ namespace DotNetOverview.Tests
     public void Prints_version_and_exits_when_Version_set()
     {
       // Arrange
-      var semVerPattern = @"^\d+\.\d+\.\d+$";
+      var semVerPattern = @"^\d+\.\d+\.\d+\+?[a-f0-9]*$";
 
       var console = CreateMockConsole();
       var program = new Program(console);

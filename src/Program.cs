@@ -3,7 +3,6 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using McMaster.Extensions.CommandLineUtils;
-using Newtonsoft.Json;
 
 namespace DotNetOverview
 {
@@ -74,7 +73,9 @@ namespace DotNetOverview
 
       if (Json)
       {
-        _console.WriteLine(JsonConvert.SerializeObject(projects, Formatting.Indented));
+        var jsonOptions = new System.Text.Json.JsonSerializerOptions { WriteIndented = true };
+        var json = System.Text.Json.JsonSerializer.Serialize(projects, jsonOptions);
+        _console.WriteLine(json);
       }
       else
       {

@@ -4,15 +4,19 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>net8.0</TargetFramework>
     <PackAsTool>true</PackAsTool>
-    <Version>3.0.1</Version>
+    <Version>3.0.2</Version>
     <Description>Display overview of all csproj files in a directory</Description>
     <Authors>Oskar Hermansson</Authors>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryUrl>https://github.com/oskar/dotnet-overview</RepositoryUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="McMaster.Extensions.Hosting.CommandLine" Version="4.1.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="..\README.md" Pack="true" PackagePath="\"/>
+  </ItemGroup>
 </Project>

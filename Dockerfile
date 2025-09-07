@@ -1,30 +1,17 @@
 FROM mcr.microsoft.com/dotnet/sdk:8.0-alpine AS build
+WORKDIR /build
 
-# restore
-WORKDIR /src
-COPY src/*.csproj .
-RUN dotnet restore
-WORKDIR /tests
-COPY tests/*.csproj .
+COPY src ./src
+COPY *.sln .
+
 RUN dotnet restore
 
-# build
-WORKDIR /src
-COPY src/. .
-RUN dotnet publish -c Release -o out
+RUN dotnet publish src/DotNetOverview --no-restore -c Release -o out
 
-# test
 FROM build AS testrunner
-WORKDIR /tests
-COPY tests/. .
-RUN dotnet test
+RUN dotnet test --no-restore
 
-# copy app
 FROM mcr.microsoft.com/dotnet/runtime:8.0-alpine AS runtime
 WORKDIR /app
-COPY --from=build /src/out ./
-
-# run
-WORKDIR /data
-VOLUME "/data"
-ENTRYPOINT ["dotnet", "/app/dotnet-overview.dll"]
+COPY --from=build /build/out ./
+ENTRYPOINT ["dotnet", "dotnet-overview.dll"]

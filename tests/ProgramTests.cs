@@ -2,7 +2,6 @@ using System;
 using System.IO;
 using System.Text.RegularExpressions;
 using McMaster.Extensions.CommandLineUtils;
-using Newtonsoft.Json;
 using NSubstitute;
 using Xunit;
 
@@ -82,7 +81,7 @@ namespace DotNetOverview.Tests
     {
       try
       {
-        JsonConvert.DeserializeObject(s);
+        System.Text.Json.JsonSerializer.Deserialize<object>(s);
         return true;
       }
       catch

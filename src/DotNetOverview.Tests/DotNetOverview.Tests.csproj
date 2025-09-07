@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\dotnet-overview.csproj" />
+    <ProjectReference Include="..\DotNetOverview\DotNetOverview.csproj" />
   </ItemGroup>
 
 </Project>

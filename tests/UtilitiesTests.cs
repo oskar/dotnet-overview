@@ -49,7 +49,7 @@ namespace DotNetOverview.Tests
                      "path/to/file.csproj something        -         ";
       var projects = new List<Project>
       {
-        new Project { Path = "path/to/file.csproj", TargetFramework = "something" }
+        new() { Path = "path/to/file.csproj", TargetFramework = "something" }
       };
 
       // Act and assert
@@ -62,11 +62,11 @@ namespace DotNetOverview.Tests
 
     [Fact]
     public void FormatRows_returns_nothing_on_empty_rows() =>
-      Assert.Equal("", Utilities.FormatRows(new string[0][]));
+      Assert.Equal("", Utilities.FormatRows([]));
 
     [Fact]
     public void FormatRows_uses_specified_separator() =>
-      Assert.Equal("1*2*3", Utilities.FormatRows(new[] { new[] { "1", "2", "3" } }, "*"));
+      Assert.Equal("1*2*3", Utilities.FormatRows([["1", "2", "3"]], "*"));
 
     [Fact]
     public void FormatRows_pads_with_spaces()

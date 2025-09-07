@@ -10,7 +10,7 @@ namespace DotNetOverview
   {
     private readonly IConsole _console;
 
-    static Task<int> Main(string[] args) => CommandLineApplication.ExecuteAsync<Program>(args);
+    private static Task<int> Main(string[] args) => CommandLineApplication.ExecuteAsync<Program>(args);
 
     [Argument(0, Description = "Path to search. Defaults to current working directory")]
     public string Path { get; set; }

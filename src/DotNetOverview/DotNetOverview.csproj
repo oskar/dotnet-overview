@@ -3,6 +3,7 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net8.0</TargetFramework>
+    <AssemblyName>dotnet-overview</AssemblyName>
     <PackAsTool>true</PackAsTool>
     <Version>3.0.3</Version>
     <Description>Display overview of all csproj files in a directory</Description>
@@ -17,6 +18,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="..\README.md" Pack="true" PackagePath="\"/>
+    <None Include="..\..\README.md" Pack="true" PackagePath="\"/>
   </ItemGroup>
 </Project>

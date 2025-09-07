@@ -1,5 +1,5 @@
 bin/
 obj/
-src/out/
+out/
 .idea/
 *.DotSettings.user

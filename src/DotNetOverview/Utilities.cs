@@ -6,13 +6,16 @@ namespace DotNetOverview;
 
 public static class Utilities
 {
+  private static readonly string[] Headers = ["Project", "Target framework", "SDK format"];
+
   public static string FormatProjects(ICollection<Project> projects, bool showPath = false)
   {
     if (projects.Count == 0)
       return string.Empty;
 
-    var rows = new List<string[]> { new[] { "Project", "Target framework", "SDK format" } };
-    rows.AddRange(projects.Select(p => new[] { showPath ? p.Path : p.Name, p.TargetFramework, FormatBoolean(p.SdkFormat) }));
+    var rows = new List<string[]> { Headers };
+    rows.AddRange(projects.Select(p => new[]
+      { showPath ? p.Path : p.Name, p.TargetFramework, FormatBoolean(p.SdkFormat) }));
 
     return FormatRows(rows.ToArray());
   }

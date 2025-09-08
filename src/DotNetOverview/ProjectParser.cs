@@ -68,7 +68,7 @@ public class ProjectParser
     var value = document.Element(_msbuildNamespace + "Project")
       ?.Elements(_msbuildNamespace + "PropertyGroup")
       .Elements(_msbuildNamespace + property)
-      ?.Select(v => v.Value)
+      .Select(v => v.Value)
       .FirstOrDefault();
 
     if (!string.IsNullOrEmpty(value))
@@ -77,7 +77,7 @@ public class ProjectParser
     return document.Element("Project")
       ?.Elements("PropertyGroup")
       .Elements(property)
-      ?.Select(v => v.Value)
+      .Select(v => v.Value)
       .FirstOrDefault();
   }
 }

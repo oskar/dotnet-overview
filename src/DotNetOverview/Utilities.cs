@@ -6,9 +6,9 @@ namespace DotNetOverview;
 
 public static class Utilities
 {
-  public static string FormatProjects(IEnumerable<Project> projects, bool showPath = false)
+  public static string FormatProjects(ICollection<Project> projects, bool showPath = false)
   {
-    if (!projects.Any())
+    if (projects.Count == 0)
       return string.Empty;
 
     var rows = new List<string[]> { new[] { "Project", "Target framework", "SDK format" } };

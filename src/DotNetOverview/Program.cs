@@ -70,7 +70,8 @@ public class Program
     var projects = files
       .Select(f => f.FullName)
       .OrderBy(f => f)
-      .Select(parser.Parse);
+      .Select(parser.Parse)
+      .ToList();
 
     if (Json)
     {

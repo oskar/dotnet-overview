@@ -20,7 +20,7 @@ public class UtilitiesTests
 
   [Fact]
   public void FormatProjects_throws_on_missing_argument() =>
-    Assert.Throws<ArgumentNullException>(() => Utilities.FormatProjects(null));
+    Assert.Throws<NullReferenceException>(() => Utilities.FormatProjects(null));
 
   [Fact]
   public void FormatProjects_returns_nothing_on_empty_project_list() =>

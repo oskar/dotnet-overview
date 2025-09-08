@@ -59,7 +59,11 @@ public class Program
       return;
     }
 
-    var files = new DirectoryInfo(Path).GetFiles("*.csproj", SearchOption.AllDirectories);
+    var files = Directory.EnumerateFiles(Path, "*.csproj", new EnumerationOptions
+    {
+      IgnoreInaccessible = true,
+      RecurseSubdirectories = true
+    }).ToArray();
 
     if (files.Length == 0)
     {
@@ -70,7 +74,6 @@ public class Program
     var basePath = AbsolutePaths ? null : Path;
     var parser = new ProjectParser(basePath);
     var projects = files
-      .Select(f => f.FullName)
       .OrderBy(f => f)
       .Select(parser.Parse)
       .ToList();

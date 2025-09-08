@@ -21,7 +21,7 @@ public static class Utilities
 
   public static string FormatRows(string[][] rows, string separator = " ")
   {
-    if (!rows.Any())
+    if (rows.Length == 0)
       return string.Empty;
 
     var formatString = string.Join(separator, Enumerable

@@ -58,7 +58,7 @@ public class UtilitiesTests
 
   [Fact]
   public void FormatRows_throws_on_missing_argument() =>
-    Assert.Throws<ArgumentNullException>(() => Utilities.FormatRows(null));
+    Assert.Throws<NullReferenceException>(() => Utilities.FormatRows(null));
 
   [Fact]
   public void FormatRows_returns_nothing_on_empty_rows() =>

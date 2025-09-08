@@ -34,7 +34,7 @@ public class UtilitiesTests
                    "proj    dotnetcore       Yes       ";
     var projects = new List<Project>
     {
-      new Project { Name = "proj", TargetFramework = "dotnetcore", SdkFormat = true }
+      new() { Name = "proj", TargetFramework = "dotnetcore", SdkFormat = true }
     };
 
     // Act and assert

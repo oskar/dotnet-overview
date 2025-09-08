@@ -1,6 +1,7 @@
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text.Json;
 using System.Threading.Tasks;
 using McMaster.Extensions.CommandLineUtils;
 
@@ -8,6 +9,7 @@ namespace DotNetOverview;
 
 public class Program
 {
+  private static readonly JsonSerializerOptions JsonOptions = new() { WriteIndented = true };
   private readonly IConsole _console;
 
   private static Task<int> Main(string[] args) => CommandLineApplication.ExecuteAsync<Program>(args);
@@ -75,8 +77,7 @@ public class Program
 
     if (Json)
     {
-      var jsonOptions = new System.Text.Json.JsonSerializerOptions { WriteIndented = true };
-      var json = System.Text.Json.JsonSerializer.Serialize(projects, jsonOptions);
+      var json = JsonSerializer.Serialize(projects, JsonOptions);
       _console.WriteLine(json);
     }
     else

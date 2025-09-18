@@ -18,7 +18,7 @@ public class ProgramTests
     var console = CreateMockConsole();
     var program = new Program(console);
     program.Version = true;
-      
+
     // Act
     program.OnExecute();
 
@@ -34,7 +34,7 @@ public class ProgramTests
     var program = new Program(console);
     program.Path = "apaththatdoesnotexist";
     Assert.False(Directory.Exists(program.Path), $"Test prerequisite failed: Path '{program.Path}' should not exist");
-      
+
     // Act
     program.OnExecute();
 
@@ -50,7 +50,7 @@ public class ProgramTests
     var program = new Program(console);
     program.Path = "."; // no csproj files exist in working dir which is "tests/bin/Debug/netcoreapp3.1"
     Assert.True(Directory.Exists(program.Path), $"Test prerequisite failed: Path '{program.Path}' should exist");
-      
+
     // Act
     program.OnExecute();
 
@@ -68,7 +68,7 @@ public class ProgramTests
     program.Path = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.Parent.ToString();
     program.Json = true;
     Assert.True(Directory.Exists(program.Path), $"Test prerequisite failed: Path '{program.Path}' should exist");
-      
+
     // Act
     program.OnExecute();
 

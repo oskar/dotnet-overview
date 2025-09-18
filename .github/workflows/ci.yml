@@ -11,3 +11,12 @@ jobs:
         dotnet-version: '8.0.x'
     - run: dotnet build
     - run: dotnet test
+  lint:
+    name: "Code linting"
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v5.0.0
+    - uses: actions/setup-dotnet@v5.0.0
+      with:
+        dotnet-version: '8.0.x'
+    - run: dotnet format --no-restore --verify-no-changes

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace DotNetOverview;
@@ -31,6 +32,6 @@ public static class Utilities
       .Range(0, rows.First().Length)
       .Select(i => $"{{{i},-{rows.Max(r => r[i]?.Length ?? 0)}}}"));
 
-    return string.Join(Environment.NewLine, rows.Select(row => string.Format(formatString, row)));
+    return string.Join(Environment.NewLine, rows.Select(row => string.Format(CultureInfo.InvariantCulture, formatString, row)));
   }
 }

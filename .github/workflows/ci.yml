@@ -19,4 +19,4 @@ jobs:
     - uses: actions/setup-dotnet@v5.0.0
       with:
         dotnet-version: '8.0.x'
-    - run: dotnet format --no-restore --verify-no-changes
+    - run: dotnet format --verify-no-changes

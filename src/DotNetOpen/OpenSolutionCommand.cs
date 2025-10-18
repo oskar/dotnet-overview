@@ -22,8 +22,11 @@ internal sealed class OpenSolutionCommand : Command<OpenSolutionCommand.Settings
 
   public override int Execute(CommandContext context, Settings settings)
   {
-    // Default to current directory if no path is specified.
-    var searchPath = settings.SearchPath ?? Directory.GetCurrentDirectory();
+    // Calculate absolute path from supplied path and default
+    // to current directory if no path is specified.
+    var searchPath = string.IsNullOrEmpty(settings.SearchPath)
+      ? settings.SearchPath ?? Directory.GetCurrentDirectory()
+      : Path.GetFullPath(settings.SearchPath);
 
     var files = Directory.EnumerateFiles(searchPath, "*.sln", new EnumerationOptions
     {

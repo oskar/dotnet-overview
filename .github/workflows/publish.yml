@@ -10,6 +10,6 @@ jobs:
         with:
           dotnet-version: '8.0.x'
       - run: dotnet pack -c Release -o .
-      - run: dotnet nuget push *.nupkg --source https://api.nuget.org/v3/index.json --api-key ${NUGET_API_KEY}
+      - run: dotnet nuget push *.nupkg --source https://api.nuget.org/v3/index.json --api-key ${NUGET_API_KEY} --skip-duplicate
         env:
           NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}

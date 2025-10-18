@@ -6,7 +6,7 @@
     <Nullable>enable</Nullable>
     <AssemblyName>dotnet-open</AssemblyName>
     <PackAsTool>true</PackAsTool>
-    <Version>0.1.0</Version>
+    <Version>0.2.0</Version>
     <Description>Find and open solution files in the current directory</Description>
     <Authors>Oskar Hermansson</Authors>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>

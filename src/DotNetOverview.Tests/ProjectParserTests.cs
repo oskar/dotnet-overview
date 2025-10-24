@@ -25,7 +25,7 @@ public class ProjectParserTests : IDisposable
 
   [Fact]
   public void Parse_throws_on_null() =>
-    Assert.Throws<ArgumentNullException>(() => new ProjectParser().Parse(null));
+    Assert.Throws<ArgumentNullException>(() => new ProjectParser().Parse(null!));
 
   [Fact]
   public void Parse_throws_on_empty_argument() =>

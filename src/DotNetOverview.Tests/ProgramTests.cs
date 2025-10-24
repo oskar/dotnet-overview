@@ -65,7 +65,7 @@ public class ProgramTests
     // Arrange
     var console = CreateMockConsole();
     var program = new Program(console);
-    program.Path = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory).Parent?.Parent?.Parent?.ToString();
+    program.Path = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory).Parent?.Parent?.Parent?.ToString() ?? "";
     program.Json = true;
     Assert.True(Directory.Exists(program.Path), $"Test prerequisite failed: Path '{program.Path}' should exist");
 

@@ -7,9 +7,9 @@ namespace DotNetOverview;
 
 public class ProjectParser
 {
-  private readonly string _basePath;
+  private readonly string? _basePath;
 
-  public ProjectParser(string basePath = null)
+  public ProjectParser(string? basePath = null)
   {
     _basePath = basePath;
   }
@@ -63,7 +63,7 @@ public class ProjectParser
   private static bool IsSdkFormat(XDocument document) =>
     !string.IsNullOrEmpty(document.Element("Project")?.Attribute("Sdk")?.Value);
 
-  private string GetPropertyValue(XDocument document, string property)
+  private string? GetPropertyValue(XDocument document, string property)
   {
     var value = document.Element(_msbuildNamespace + "Project")
       ?.Elements(_msbuildNamespace + "PropertyGroup")

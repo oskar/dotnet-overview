@@ -15,7 +15,7 @@ public class Program
   private static Task<int> Main(string[] args) => CommandLineApplication.ExecuteAsync<Program>(args);
 
   [Argument(0, Description = "Path to search. Defaults to current working directory")]
-  public string Path { get; set; }
+  public string? Path { get; set; }
 
   [Option(Description = "Print version of this tool and exit")]
   public bool Version { get; set; }

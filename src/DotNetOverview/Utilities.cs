@@ -14,7 +14,7 @@ public static class Utilities
     if (projects.Count == 0)
       return string.Empty;
 
-    var rows = new List<string[]> { Headers };
+    var rows = new List<string?[]> { Headers };
     rows.AddRange(projects.Select(p => new[]
       { showPath ? p.Path : p.Name, p.TargetFramework, FormatBoolean(p.SdkFormat) }));
 
@@ -23,7 +23,7 @@ public static class Utilities
 
   public static string FormatBoolean(bool? value) => value.HasValue ? value.Value ? "Yes" : "No" : "-";
 
-  public static string FormatRows(string[][] rows, string separator = " ")
+  public static string FormatRows(string?[][] rows, string separator = " ")
   {
     if (rows.Length == 0)
       return string.Empty;

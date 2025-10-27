@@ -7,7 +7,7 @@ using Spectre.Console.Cli;
 
 namespace DotNetOpen;
 
-internal sealed class OpenSolutionCommand : Command<OpenSolutionCommand.Settings>
+internal sealed class OpenSolutionCommand(IAnsiConsole ansiConsole) : Command<OpenSolutionCommand.Settings>
 {
   public sealed class Settings : CommandSettings
   {
@@ -36,7 +36,7 @@ internal sealed class OpenSolutionCommand : Command<OpenSolutionCommand.Settings
 
     if (files.Length == 0)
     {
-      AnsiConsole.MarkupLine("[red]No solution found in path.[/]");
+      ansiConsole.MarkupLine("[red]No solution found in path.[/]");
       return 1;
     }
 
@@ -46,7 +46,7 @@ internal sealed class OpenSolutionCommand : Command<OpenSolutionCommand.Settings
       return 0;
     }
 
-    AnsiConsole.MarkupLine($"Found [green]{files.Length}[/] solutions in [green]{searchPath}[/].");
+    ansiConsole.MarkupLine($"Found [green]{files.Length}[/] solutions in [green]{searchPath}[/].");
 
     if (settings.First)
     {
@@ -62,15 +62,15 @@ internal sealed class OpenSolutionCommand : Command<OpenSolutionCommand.Settings
       Converter = path => Path.GetRelativePath(searchPath, path)
     };
     selectionPrompt.AddChoices(files);
-    var selectedSolution = AnsiConsole.Prompt(selectionPrompt);
+    var selectedSolution = ansiConsole.Prompt(selectionPrompt);
     OpenFile(selectedSolution);
 
     return 0;
   }
 
-  private static void OpenFile(string filePath)
+  private void OpenFile(string filePath)
   {
-    AnsiConsole.MarkupLine($"Opening [green]{filePath}[/].");
+    ansiConsole.MarkupLine($"Opening [green]{filePath}[/].");
     Process.Start(new ProcessStartInfo
     {
       FileName = filePath,

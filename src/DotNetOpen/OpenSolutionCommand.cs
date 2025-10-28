@@ -13,7 +13,7 @@ internal sealed class OpenSolutionCommand : Command<OpenSolutionCommand.Settings
   {
     [Description("Path to search. Defaults to current directory.")]
     [CommandArgument(0, "[searchPath]")]
-    public string? SearchPath { get; init; }
+    public string SearchPath { get; init; } = "";
 
     [Description("Open first solution if multiple are found.")]
     [CommandOption("-f|--first")]
@@ -25,7 +25,7 @@ internal sealed class OpenSolutionCommand : Command<OpenSolutionCommand.Settings
     // Calculate absolute path from supplied path and default
     // to current directory if no path is specified.
     var searchPath = string.IsNullOrEmpty(settings.SearchPath)
-      ? settings.SearchPath ?? Directory.GetCurrentDirectory()
+      ? Directory.GetCurrentDirectory()
       : Path.GetFullPath(settings.SearchPath);
 
     var files = Directory.EnumerateFiles(searchPath, "*.sln", new EnumerationOptions

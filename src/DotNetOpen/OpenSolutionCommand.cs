@@ -7,7 +7,7 @@ using Spectre.Console.Cli;
 
 namespace DotNetOpen;
 
-internal sealed class OpenSolutionCommand(IAnsiConsole ansiConsole) : Command<OpenSolutionCommand.Settings>
+public sealed class OpenSolutionCommand(IAnsiConsole ansiConsole) : Command<OpenSolutionCommand.Settings>
 {
   public sealed class Settings : CommandSettings
   {

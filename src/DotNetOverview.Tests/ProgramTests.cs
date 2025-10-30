@@ -1,8 +1,6 @@
 using System;
 using System.IO;
-using System.Text.RegularExpressions;
-using McMaster.Extensions.CommandLineUtils;
-using NSubstitute;
+using Spectre.Console.Testing;
 using Xunit;
 
 namespace DotNetOverview.Tests;
@@ -23,7 +21,7 @@ public class ProgramTests
     program.OnExecute();
 
     // Assert
-    console.Out.Received(1).WriteLine(Arg.Is<string>(s => Regex.IsMatch(s, semVerPattern)));
+    Assert.Matches(semVerPattern, console.Output);
   }
 
   [Fact]
@@ -39,7 +37,7 @@ public class ProgramTests
     program.OnExecute();
 
     // Assert
-    console.Out.Received(1).WriteLine(Arg.Is<string>(s => s.StartsWith("Path does not exist")));
+    Assert.Equal("Path does not exist: apaththatdoesnotexist.", console.Output.Trim());
   }
 
   [Fact]
@@ -55,8 +53,7 @@ public class ProgramTests
     program.OnExecute();
 
     // Assert
-    console.Out.Received(1).WriteLine("No csproj files found in path.");
-    console.Out.Received(1).WriteLine(Arg.Any<string>());
+    Assert.Equal("No csproj files found in path.", console.Output.Trim());
   }
 
   [Fact]
@@ -73,8 +70,7 @@ public class ProgramTests
     program.OnExecute();
 
     // Assert
-    console.Out.Received(1).WriteLine(Arg.Is<string>(s => IsJson(s)));
-    console.Out.Received(1).WriteLine(Arg.Any<string>());
+    Assert.True(IsJson(console.Output));
   }
 
   private static bool IsJson(string s)
@@ -90,10 +86,8 @@ public class ProgramTests
     }
   }
 
-  private static IConsole CreateMockConsole()
+  private static TestConsole CreateMockConsole()
   {
-    var console = Substitute.For<IConsole>();
-    console.Out.Returns(Substitute.For<TextWriter>());
-    return console;
+    return new TestConsole();
   }
 }

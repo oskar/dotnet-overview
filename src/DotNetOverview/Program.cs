@@ -4,15 +4,28 @@ using System.Reflection;
 using System.Text.Json;
 using System.Threading.Tasks;
 using McMaster.Extensions.CommandLineUtils;
+using Microsoft.Extensions.DependencyInjection;
+using Spectre.Console;
 
 namespace DotNetOverview;
 
 public class Program
 {
   private static readonly JsonSerializerOptions JsonOptions = new() { WriteIndented = true };
-  private readonly IConsole _console;
+  private readonly IAnsiConsole _console;
 
-  private static Task<int> Main(string[] args) => CommandLineApplication.ExecuteAsync<Program>(args);
+  private static Task<int> Main(string[] args)
+  {
+    var services = new ServiceCollection()
+      .AddSingleton(AnsiConsole.Console)
+      .BuildServiceProvider();
+
+    var app = new CommandLineApplication<Program>();
+    app.Conventions.UseDefaultConventions();
+    app.Conventions.UseConstructorInjection(services);
+
+    return app.ExecuteAsync(args);
+  }
 
   [Argument(0, Description = "Path to search. Defaults to current working directory")]
   public string? Path { get; set; }
@@ -32,7 +45,7 @@ public class Program
   [Option(Description = "Format the result as JSON")]
   public bool Json { get; set; }
 
-  public Program(IConsole console)
+  public Program(IAnsiConsole console)
   {
     _console = console;
   }
@@ -55,7 +68,7 @@ public class Program
 
     if (!Directory.Exists(Path))
     {
-      _console.WriteLine("Path does not exist: " + Path);
+      _console.MarkupLine($"Path does not exist: [green]{Path}[/].");
       return;
     }
 
@@ -85,12 +98,12 @@ public class Program
     }
     else
     {
-      _console.WriteLine(Utilities.FormatProjects(projects, ShowPaths));
+      _console.Write(Utilities.FormatProjects(projects, ShowPaths));
     }
 
     if (Count)
     {
-      _console.WriteLine($"Found {files.Length} project(s).");
+      _console.MarkupLine($"Found [green]{files.Length}[/] project(s).");
     }
   }
 }

@@ -9,8 +9,16 @@ A collection of .NET tools for common development tasks.
 Display an overview of all `.csproj` files in the current directory or any specified path, showing project names, target frameworks, and SDK format information. Supports JSON output for advanced filtering.
 
 ```bash
-dotnet tool install -g dotnet-overview
-dotnet overview
+❯ dotnet tool install -g dotnet-overview
+❯ dotnet overview
+┌──────────────────────┬──────────────────┬────────────┐
+│ Project              │ Target framework │ SDK format │
+├──────────────────────┼──────────────────┼────────────┤
+│ DotNetOpen.Tests     │ net8.0           │ Yes        │
+│ DotNetOpen           │ net8.0           │ Yes        │
+│ DotNetOverview.Tests │ net8.0           │ Yes        │
+│ DotNetOverview       │ net8.0           │ Yes        │
+└──────────────────────┴──────────────────┴────────────┘
 ```
 
 ## [dotnet-open](src/DotNetOpen/README.md)
@@ -20,6 +28,7 @@ dotnet overview
 Find and open solution files in the current directory or any specified path. Presents an interactive menu when multiple solutions are found.
 
 ```bash
-dotnet tool install -g dotnet-open
-dotnet open
+❯ dotnet tool install -g dotnet-open
+❯ dotnet open
+Opening /Users/oskar/git/dotnet-overview/DotNetTools.sln.
 ```

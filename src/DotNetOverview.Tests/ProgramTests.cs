@@ -46,7 +46,7 @@ public class ProgramTests
     // Arrange
     var console = new TestConsole();
     var program = new Program(console);
-    program.Path = "."; // no csproj files exist in working dir which is "tests/bin/Debug/netcoreapp3.1"
+    program.Path = "."; // no csproj files exist in working directory when running tests
     Assert.True(Directory.Exists(program.Path), $"Test prerequisite failed: Path '{program.Path}' should exist");
 
     // Act

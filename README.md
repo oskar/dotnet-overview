@@ -1,33 +1,21 @@
 # dotnet-overview
 
-A .NET Core global tool to display a simple overview of all projects in a directory, with information such as target framework.
+A collection of .NET tools for common development tasks.
 
-## Installation
+## [dotnet-overview](src/DotNetOverview/README.md)
 
-Install: `dotnet tool install -g dotnet-overview`
+Display an overview of all `.csproj` files in the current directory or any specified path, showing project names, target frameworks, and SDK format information. Supports JSON output for advanced filtering.
 
-Update: `dotnet tool update -g dotnet-overview`
+```bash
+dotnet tool install -g dotnet-overview
+dotnet overview
+```
 
-Uninstall: `dotnet tool uninstall -g dotnet-overview`
+## [dotnet-open](src/DotNetOpen/README.md)
 
-## Usage
+Find and open solution files in the current directory or any specified path. Presents an interactive menu when multiple solutions are found.
 
-Run `dotnet overview` in any directory that contains .csproj files to print an overview.
-
-Run `dotnet overview -h` to see options and usage.
-
-## Advanced usage
-
-Some examples using PowerShell to filter the output. Note the parentheses.
-
-Show project(s) which exactly maches name:
-
-`(dotnet overview -j | ConvertFrom-Json) | where Name -eq 'MyProject'`
-
-Show only projects with names matching pattern:
-
-`(dotnet overview -j | ConvertFrom-Json) | where Name -like 'test*'`
-
-Group by target framework all projects not using the new SDK csproj format and sort by count descending:
-
-`(dotnet overview -j | ConvertFrom-Json) | where SdkFormat -eq $false | select TargetFramework | group -Property TargetFramework -NoElement | sort -Property Count -Descending`
+```bash
+dotnet tool install -g dotnet-open
+dotnet open
+```

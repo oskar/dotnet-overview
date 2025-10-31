@@ -13,7 +13,7 @@ public class ProgramTests
     // Arrange
     var semVerPattern = @"^\d+\.\d+\.\d+$";
 
-    var console = CreateMockConsole();
+    var console = new TestConsole();
     var program = new Program(console);
     program.Version = true;
 
@@ -28,7 +28,7 @@ public class ProgramTests
   public void Checks_for_invalid_path()
   {
     // Arrange
-    var console = CreateMockConsole();
+    var console = new TestConsole();
     var program = new Program(console);
     program.Path = "apaththatdoesnotexist";
     Assert.False(Directory.Exists(program.Path), $"Test prerequisite failed: Path '{program.Path}' should not exist");
@@ -44,7 +44,7 @@ public class ProgramTests
   public void Stops_if_no_csproj_files_found()
   {
     // Arrange
-    var console = CreateMockConsole();
+    var console = new TestConsole();
     var program = new Program(console);
     program.Path = "."; // no csproj files exist in working dir which is "tests/bin/Debug/netcoreapp3.1"
     Assert.True(Directory.Exists(program.Path), $"Test prerequisite failed: Path '{program.Path}' should exist");
@@ -60,7 +60,7 @@ public class ProgramTests
   public void Prints_json_if_requested()
   {
     // Arrange
-    var console = CreateMockConsole();
+    var console = new TestConsole();
     var program = new Program(console);
     program.Path = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory).Parent?.Parent?.Parent?.ToString() ?? "";
     program.Json = true;
@@ -84,10 +84,5 @@ public class ProgramTests
     {
       return false;
     }
-  }
-
-  private static TestConsole CreateMockConsole()
-  {
-    return new TestConsole();
   }
 }

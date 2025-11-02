@@ -11,99 +11,99 @@ namespace DotNetOverview;
 
 public class Program
 {
-  private static readonly JsonSerializerOptions JsonOptions = new() { WriteIndented = true };
-  private readonly IAnsiConsole _console;
+    private static readonly JsonSerializerOptions JsonOptions = new() { WriteIndented = true };
+    private readonly IAnsiConsole _console;
 
-  private static Task<int> Main(string[] args)
-  {
-    var services = new ServiceCollection()
-      .AddSingleton(AnsiConsole.Console)
-      .BuildServiceProvider();
-
-    var app = new CommandLineApplication<Program>();
-    app.Conventions.UseDefaultConventions();
-    app.Conventions.UseConstructorInjection(services);
-
-    return app.ExecuteAsync(args);
-  }
-
-  [Argument(0, Description = "Path to search. Defaults to current working directory")]
-  public string? Path { get; set; }
-
-  [Option(Description = "Print version of this tool and exit")]
-  public bool Version { get; set; }
-
-  [Option(Description = "Show project file paths instead of name", ShortName = "p")]
-  public bool ShowPaths { get; set; }
-
-  [Option(Description = "Show absolute paths instead of relative")]
-  public bool AbsolutePaths { get; set; }
-
-  [Option(Description = "Show number of projects found")]
-  public bool Count { get; set; }
-
-  [Option(Description = "Format the result as JSON")]
-  public bool Json { get; set; }
-
-  public Program(IAnsiConsole console)
-  {
-    _console = console;
-  }
-
-  public void OnExecute()
-  {
-    if (Version)
+    private static Task<int> Main(string[] args)
     {
-      var attribute = Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyInformationalVersionAttribute>();
-      var version = attribute?.InformationalVersion.Split('+')[0] ?? "Unknown";
-      _console.WriteLine(version);
-      return;
+        var services = new ServiceCollection()
+          .AddSingleton(AnsiConsole.Console)
+          .BuildServiceProvider();
+
+        var app = new CommandLineApplication<Program>();
+        app.Conventions.UseDefaultConventions();
+        app.Conventions.UseConstructorInjection(services);
+
+        return app.ExecuteAsync(args);
     }
 
-    if (string.IsNullOrEmpty(Path))
+    [Argument(0, Description = "Path to search. Defaults to current working directory")]
+    public string? Path { get; set; }
+
+    [Option(Description = "Print version of this tool and exit")]
+    public bool Version { get; set; }
+
+    [Option(Description = "Show project file paths instead of name", ShortName = "p")]
+    public bool ShowPaths { get; set; }
+
+    [Option(Description = "Show absolute paths instead of relative")]
+    public bool AbsolutePaths { get; set; }
+
+    [Option(Description = "Show number of projects found")]
+    public bool Count { get; set; }
+
+    [Option(Description = "Format the result as JSON")]
+    public bool Json { get; set; }
+
+    public Program(IAnsiConsole console)
     {
-      // Default to current working directory
-      Path = ".";
+        _console = console;
     }
 
-    if (!Directory.Exists(Path))
+    public void OnExecute()
     {
-      _console.MarkupLine($"Path does not exist: [green]{Path}[/].");
-      return;
-    }
+        if (Version)
+        {
+            var attribute = Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyInformationalVersionAttribute>();
+            var version = attribute?.InformationalVersion.Split('+')[0] ?? "Unknown";
+            _console.WriteLine(version);
+            return;
+        }
 
-    var files = Directory.EnumerateFiles(Path, "*.csproj", new EnumerationOptions
-    {
-      IgnoreInaccessible = true,
-      RecurseSubdirectories = true
-    }).ToArray();
+        if (string.IsNullOrEmpty(Path))
+        {
+            // Default to current working directory
+            Path = ".";
+        }
 
-    if (files.Length == 0)
-    {
-      _console.WriteLine("No csproj files found in path.");
-      return;
-    }
+        if (!Directory.Exists(Path))
+        {
+            _console.MarkupLine($"Path does not exist: [green]{Path}[/].");
+            return;
+        }
 
-    var basePath = AbsolutePaths ? null : Path;
-    var parser = new ProjectParser(basePath);
-    var projects = files
-      .OrderBy(f => f)
-      .Select(parser.Parse)
-      .ToList();
+        var files = Directory.EnumerateFiles(Path, "*.csproj", new EnumerationOptions
+        {
+            IgnoreInaccessible = true,
+            RecurseSubdirectories = true
+        }).ToArray();
 
-    if (Json)
-    {
-      var json = JsonSerializer.Serialize(projects, JsonOptions);
-      _console.WriteLine(json);
-    }
-    else
-    {
-      _console.Write(Utilities.FormatProjects(projects, ShowPaths));
-    }
+        if (files.Length == 0)
+        {
+            _console.WriteLine("No csproj files found in path.");
+            return;
+        }
 
-    if (Count)
-    {
-      _console.MarkupLine($"Found [green]{files.Length}[/] project(s).");
+        var basePath = AbsolutePaths ? null : Path;
+        var parser = new ProjectParser(basePath);
+        var projects = files
+          .OrderBy(f => f)
+          .Select(parser.Parse)
+          .ToList();
+
+        if (Json)
+        {
+            var json = JsonSerializer.Serialize(projects, JsonOptions);
+            _console.WriteLine(json);
+        }
+        else
+        {
+            _console.Write(Utilities.FormatProjects(projects, ShowPaths));
+        }
+
+        if (Count)
+        {
+            _console.MarkupLine($"Found [green]{files.Length}[/] project(s).");
+        }
     }
-  }
 }

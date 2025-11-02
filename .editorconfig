@@ -13,6 +13,8 @@ charset = utf-8
 
 # C# files
 [*.cs]
+indent_size = 4
+
 # New line preferences
 csharp_new_line_before_open_brace = all
 csharp_new_line_before_else = true

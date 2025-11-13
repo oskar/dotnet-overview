@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Spectre.Console" VersionOverride="0.54.0" />
     <PackageReference Include="Spectre.Console.Cli" />
   </ItemGroup>
 

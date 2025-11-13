@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Spectre.Console.Cli" />
     <ProjectReference Include="..\DotNetOverview\DotNetOverview.csproj" />
   </ItemGroup>
 

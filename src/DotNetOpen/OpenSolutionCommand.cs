@@ -2,6 +2,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using Spectre.Console;
 using Spectre.Console.Cli;
 
@@ -20,7 +21,7 @@ public sealed class OpenSolutionCommand(IAnsiConsole ansiConsole) : Command<Open
         public bool First { get; init; }
     }
 
-    public override int Execute(CommandContext context, Settings settings)
+    public override int Execute(CommandContext context, Settings settings, CancellationToken cancellationToken)
     {
         // Calculate absolute path from supplied path and default
         // to current directory if no path is specified.

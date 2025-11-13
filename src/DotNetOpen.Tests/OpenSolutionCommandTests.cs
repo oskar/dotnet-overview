@@ -1,8 +1,6 @@
 using System;
 using System.IO;
-using NSubstitute;
-using Spectre.Console;
-using Spectre.Console.Rendering;
+using System.Threading;
 using Spectre.Console.Testing;
 using Xunit;
 
@@ -39,7 +37,7 @@ public class OpenSolutionCommandTests : IDisposable
         };
 
         // Act
-        var result = command.Execute(null!, settings);
+        var result = command.Execute(null!, settings, CancellationToken.None);
 
         // Assert
         Assert.Equal(1, result);
@@ -59,7 +57,7 @@ public class OpenSolutionCommandTests : IDisposable
         };
 
         // Act
-        var result = command.Execute(null!, settings);
+        var result = command.Execute(null!, settings, CancellationToken.None);
 
         // Assert
         Assert.Equal(0, result);
@@ -82,7 +80,7 @@ public class OpenSolutionCommandTests : IDisposable
         };
 
         // Act
-        var result = command.Execute(null!, settings);
+        var result = command.Execute(null!, settings, CancellationToken.None);
 
         // Assert
         Assert.Equal(0, result);
@@ -106,7 +104,7 @@ public class OpenSolutionCommandTests : IDisposable
         };
 
         // Act
-        var result = command.Execute(null!, settings);
+        var result = command.Execute(null!, settings, CancellationToken.None);
 
         // Assert
         Assert.Equal(0, result);
@@ -124,7 +122,7 @@ public class OpenSolutionCommandTests : IDisposable
         };
 
         // Act
-        var result = command.Execute(null!, settings);
+        var result = command.Execute(null!, settings, CancellationToken.None);
 
         // Assert
         // Since current directory likely has no solutions, we expect return code 1

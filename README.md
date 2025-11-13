@@ -1,4 +1,4 @@
-# dotnet-overview
+# dotnet-tools
 
 A collection of .NET tools for common development tasks.
 
@@ -30,5 +30,5 @@ Find and open solution files in the current directory or any specified path. Pre
 ```bash
 ❯ dotnet tool install -g dotnet-open
 ❯ dotnet open
-Opening /Users/oskar/git/dotnet-overview/DotNetTools.sln.
+Opening /Users/oskar/git/dotnet-tools/DotNetTools.sln.
 ```

@@ -14,7 +14,7 @@ public class OverviewCommandTests
         // Arrange
         var semVerPattern = @"^\d+\.\d+\.\d+$";
 
-        var console = new TestConsole();
+        var console = CreateTestConsole();
         var command = new OverviewCommand(console);
         var settings = new OverviewCommand.Settings { Version = true };
 
@@ -29,9 +29,7 @@ public class OverviewCommandTests
     public void Checks_for_invalid_path()
     {
         // Arrange
-        var console = new TestConsole();
-        // Make sure the console is wide enough to avoid wrapping when printing the path
-        console.Profile.Width = 1024;
+        var console = CreateTestConsole();
         var command = new OverviewCommand(console);
         var settings = new OverviewCommand.Settings { Path = "apaththatdoesnotexist" };
         Assert.False(Directory.Exists(settings.Path), $"Test prerequisite failed: Path '{settings.Path}' should not exist");
@@ -47,7 +45,7 @@ public class OverviewCommandTests
     public void Stops_if_no_csproj_files_found()
     {
         // Arrange
-        var console = new TestConsole();
+        var console = CreateTestConsole();
         var command = new OverviewCommand(console);
         var settings = new OverviewCommand.Settings { Path = "." }; // no csproj files exist in working directory when running tests
         Assert.True(Directory.Exists(settings.Path), $"Test prerequisite failed: Path '{settings.Path}' should exist");
@@ -63,7 +61,7 @@ public class OverviewCommandTests
     public void Prints_json_if_requested()
     {
         // Arrange
-        var console = new TestConsole();
+        var console = CreateTestConsole();
         var command = new OverviewCommand(console);
         var settings = new OverviewCommand.Settings()
         {
@@ -90,5 +88,15 @@ public class OverviewCommandTests
         {
             return false;
         }
+    }
+
+    private static TestConsole CreateTestConsole()
+    {
+        var console = new TestConsole();
+
+        // Make sure the console is wide enough to avoid wrapping when printing the solution path
+        console.Profile.Width = 1024;
+
+        return console;
     }
 }

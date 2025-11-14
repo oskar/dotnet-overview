@@ -11,21 +11,24 @@ namespace DotNetOverview;
 
 public class Program
 {
-    private static readonly JsonSerializerOptions JsonOptions = new() { WriteIndented = true };
-    private readonly IAnsiConsole _console;
-
     private static Task<int> Main(string[] args)
     {
         var services = new ServiceCollection()
-          .AddSingleton(AnsiConsole.Console)
-          .BuildServiceProvider();
+            .AddSingleton(AnsiConsole.Console)
+            .BuildServiceProvider();
 
-        var app = new CommandLineApplication<Program>();
+        var app = new CommandLineApplication<OverviewCommand>();
         app.Conventions.UseDefaultConventions();
         app.Conventions.UseConstructorInjection(services);
 
         return app.ExecuteAsync(args);
     }
+}
+
+public class OverviewCommand
+{
+    private static readonly JsonSerializerOptions JsonOptions = new() { WriteIndented = true };
+    private readonly IAnsiConsole _console;
 
     [Argument(0, Description = "Path to search. Defaults to current working directory")]
     public string? Path { get; set; }
@@ -45,7 +48,7 @@ public class Program
     [Option(Description = "Format the result as JSON")]
     public bool Json { get; set; }
 
-    public Program(IAnsiConsole console)
+    public OverviewCommand(IAnsiConsole console)
     {
         _console = console;
     }

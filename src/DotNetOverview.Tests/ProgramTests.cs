@@ -14,7 +14,7 @@ public class ProgramTests
         var semVerPattern = @"^\d+\.\d+\.\d+$";
 
         var console = new TestConsole();
-        var program = new Program(console);
+        var program = new OverviewCommand(console);
         program.Version = true;
 
         // Act
@@ -29,7 +29,7 @@ public class ProgramTests
     {
         // Arrange
         var console = new TestConsole();
-        var program = new Program(console);
+        var program = new OverviewCommand(console);
         program.Path = "apaththatdoesnotexist";
         Assert.False(Directory.Exists(program.Path), $"Test prerequisite failed: Path '{program.Path}' should not exist");
 
@@ -45,7 +45,7 @@ public class ProgramTests
     {
         // Arrange
         var console = new TestConsole();
-        var program = new Program(console);
+        var program = new OverviewCommand(console);
         program.Path = "."; // no csproj files exist in working directory when running tests
         Assert.True(Directory.Exists(program.Path), $"Test prerequisite failed: Path '{program.Path}' should exist");
 
@@ -61,7 +61,7 @@ public class ProgramTests
     {
         // Arrange
         var console = new TestConsole();
-        var program = new Program(console);
+        var program = new OverviewCommand(console);
         program.Path = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory).Parent?.Parent?.Parent?.ToString() ?? "";
         program.Json = true;
         Assert.True(Directory.Exists(program.Path), $"Test prerequisite failed: Path '{program.Path}' should exist");

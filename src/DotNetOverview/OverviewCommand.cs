@@ -59,7 +59,7 @@ public sealed class OverviewCommand(IAnsiConsole ansiConsole) : Command<Overview
         if (!Directory.Exists(searchPath))
         {
             ansiConsole.MarkupLine($"Path does not exist: [green]{searchPath}[/].");
-            return 0;
+            return 1;
         }
 
         var files = Directory.EnumerateFiles(searchPath, "*.csproj", new EnumerationOptions

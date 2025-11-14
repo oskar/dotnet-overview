@@ -40,7 +40,7 @@ public class OpenSolutionCommandTests : IDisposable
         var result = command.Execute(null!, settings, CancellationToken.None);
 
         // Assert
-        Assert.Equal(1, result);
+        Assert.Equal(0, result);
         Assert.Equal("No solution found in path.", console.Output.Trim());
     }
 
@@ -126,7 +126,7 @@ public class OpenSolutionCommandTests : IDisposable
 
         // Assert
         // Since current directory likely has no solutions, we expect return code 1
-        Assert.Equal(1, result);
+        Assert.Equal(0, result);
         Assert.Equal("No solution found in path.", console.Output.Trim());
     }
 

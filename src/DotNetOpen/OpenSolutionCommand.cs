@@ -29,6 +29,12 @@ public sealed class OpenSolutionCommand(IAnsiConsole ansiConsole) : Command<Open
           ? Directory.GetCurrentDirectory()
           : Path.GetFullPath(settings.Path);
 
+        if (!Directory.Exists(searchPath))
+        {
+            ansiConsole.MarkupLine($"Path does not exist: [green]{searchPath}[/].");
+            return 1;
+        }
+
         var files = Directory.EnumerateFiles(searchPath, "*.sln", new EnumerationOptions
         {
             IgnoreInaccessible = true,
@@ -37,8 +43,8 @@ public sealed class OpenSolutionCommand(IAnsiConsole ansiConsole) : Command<Open
 
         if (files.Length == 0)
         {
-            ansiConsole.MarkupLine("[red]No solution found in path.[/]");
-            return 1;
+            ansiConsole.WriteLine("No solution found in path.");
+            return 0;
         }
 
         if (files.Length == 1)

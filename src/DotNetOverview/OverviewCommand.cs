@@ -85,10 +85,7 @@ public sealed class OverviewCommand(IAnsiConsole ansiConsole) : Command<Overview
             // Make paths relative to search path.
             foreach (Project project in projects)
             {
-                if (!string.IsNullOrEmpty(project.Path))
-                {
-                    project.Path = Path.GetRelativePath(searchPath, project.Path);
-                }
+                project.Path = Path.GetRelativePath(searchPath, project.Path);
             }
         }
 

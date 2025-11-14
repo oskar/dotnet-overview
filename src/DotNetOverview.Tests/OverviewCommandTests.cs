@@ -5,7 +5,7 @@ using Xunit;
 
 namespace DotNetOverview.Tests;
 
-public class ProgramTests
+public class OverviewCommandTests
 {
     [Fact]
     public void Prints_version_and_exits_when_Version_set()

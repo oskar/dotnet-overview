@@ -52,17 +52,17 @@ public sealed class OverviewCommand(IAnsiConsole ansiConsole) : Command<Overview
 
         // Calculate absolute path from supplied path and default
         // to current directory if no path is specified.
-        settings.Path = string.IsNullOrEmpty(settings.Path)
+        var searchPath = string.IsNullOrEmpty(settings.Path)
             ? Directory.GetCurrentDirectory()
             : Path.GetFullPath(settings.Path);
 
-        if (!Directory.Exists(settings.Path))
+        if (!Directory.Exists(searchPath))
         {
-            ansiConsole.MarkupLine($"Path does not exist: [green]{settings.Path}[/].");
+            ansiConsole.MarkupLine($"Path does not exist: [green]{searchPath}[/].");
             return 0;
         }
 
-        var files = Directory.EnumerateFiles(settings.Path, "*.csproj", new EnumerationOptions
+        var files = Directory.EnumerateFiles(searchPath, "*.csproj", new EnumerationOptions
         {
             IgnoreInaccessible = true,
             RecurseSubdirectories = true
@@ -87,7 +87,7 @@ public sealed class OverviewCommand(IAnsiConsole ansiConsole) : Command<Overview
             {
                 if (!string.IsNullOrEmpty(project.Path))
                 {
-                    project.Path = Path.GetRelativePath(settings.Path, project.Path);
+                    project.Path = Path.GetRelativePath(searchPath, project.Path);
                 }
             }
         }

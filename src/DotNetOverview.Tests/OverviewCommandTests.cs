@@ -30,6 +30,8 @@ public class OverviewCommandTests
     {
         // Arrange
         var console = new TestConsole();
+        // Make sure the console is wide enough to avoid wrapping when printing the path
+        console.Profile.Width = 1024;
         var command = new OverviewCommand(console);
         var settings = new OverviewCommand.Settings { Path = "apaththatdoesnotexist" };
         Assert.False(Directory.Exists(settings.Path), $"Test prerequisite failed: Path '{settings.Path}' should not exist");
@@ -38,7 +40,7 @@ public class OverviewCommandTests
         command.Execute(null!, settings, CancellationToken.None);
 
         // Assert
-        Assert.Equal("Path does not exist: apaththatdoesnotexist.", console.Output.Trim());
+        Assert.Matches(@"^Path does not exist: .*apaththatdoesnotexist\.$", console.Output.Trim());
     }
 
     [Fact]

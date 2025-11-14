@@ -23,7 +23,7 @@ public sealed class OverviewCommand(IAnsiConsole ansiConsole) : Command<Overview
         [CommandOption("-v|--version")]
         public bool Version { get; set; }
 
-        [Description("Show project file paths instead of name")]
+        [Description("Show project file paths (relative to search path) instead of name")]
         [CommandOption("-p|--show-paths")]
         public bool ShowPaths { get; set; }
 
@@ -50,11 +50,11 @@ public sealed class OverviewCommand(IAnsiConsole ansiConsole) : Command<Overview
             return 0;
         }
 
-        if (string.IsNullOrEmpty(settings.Path))
-        {
-            // Default to current working directory
-            settings.Path = ".";
-        }
+        // Calculate absolute path from supplied path and default
+        // to current directory if no path is specified.
+        settings.Path = string.IsNullOrEmpty(settings.Path)
+            ? Directory.GetCurrentDirectory()
+            : Path.GetFullPath(settings.Path);
 
         if (!Directory.Exists(settings.Path))
         {
@@ -74,12 +74,23 @@ public sealed class OverviewCommand(IAnsiConsole ansiConsole) : Command<Overview
             return 0;
         }
 
-        var basePath = settings.AbsolutePaths ? null : settings.Path;
-        var parser = new ProjectParser(basePath);
+        var parser = new ProjectParser();
         var projects = files
             .OrderBy(f => f)
             .Select(parser.Parse)
             .ToList();
+
+        if (!settings.AbsolutePaths)
+        {
+            // Make paths relative to search path.
+            foreach (Project project in projects)
+            {
+                if (!string.IsNullOrEmpty(project.Path))
+                {
+                    project.Path = Path.GetRelativePath(settings.Path, project.Path);
+                }
+            }
+        }
 
         if (settings.Json)
         {

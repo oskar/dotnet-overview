@@ -14,11 +14,11 @@ public class OverviewCommandTests
         var semVerPattern = @"^\d+\.\d+\.\d+$";
 
         var console = new TestConsole();
-        var program = new OverviewCommand(console);
-        program.Version = true;
+        var command = new OverviewCommand(console);
+        command.Version = true;
 
         // Act
-        program.OnExecute();
+        command.OnExecute();
 
         // Assert
         Assert.Matches(semVerPattern, console.Output);
@@ -29,12 +29,12 @@ public class OverviewCommandTests
     {
         // Arrange
         var console = new TestConsole();
-        var program = new OverviewCommand(console);
-        program.Path = "apaththatdoesnotexist";
-        Assert.False(Directory.Exists(program.Path), $"Test prerequisite failed: Path '{program.Path}' should not exist");
+        var command = new OverviewCommand(console);
+        command.Path = "apaththatdoesnotexist";
+        Assert.False(Directory.Exists(command.Path), $"Test prerequisite failed: Path '{command.Path}' should not exist");
 
         // Act
-        program.OnExecute();
+        command.OnExecute();
 
         // Assert
         Assert.Equal("Path does not exist: apaththatdoesnotexist.", console.Output.Trim());
@@ -45,12 +45,12 @@ public class OverviewCommandTests
     {
         // Arrange
         var console = new TestConsole();
-        var program = new OverviewCommand(console);
-        program.Path = "."; // no csproj files exist in working directory when running tests
-        Assert.True(Directory.Exists(program.Path), $"Test prerequisite failed: Path '{program.Path}' should exist");
+        var command = new OverviewCommand(console);
+        command.Path = "."; // no csproj files exist in working directory when running tests
+        Assert.True(Directory.Exists(command.Path), $"Test prerequisite failed: Path '{command.Path}' should exist");
 
         // Act
-        program.OnExecute();
+        command.OnExecute();
 
         // Assert
         Assert.Equal("No csproj files found in path.", console.Output.Trim());
@@ -61,13 +61,13 @@ public class OverviewCommandTests
     {
         // Arrange
         var console = new TestConsole();
-        var program = new OverviewCommand(console);
-        program.Path = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory).Parent?.Parent?.Parent?.ToString() ?? "";
-        program.Json = true;
-        Assert.True(Directory.Exists(program.Path), $"Test prerequisite failed: Path '{program.Path}' should exist");
+        var command = new OverviewCommand(console);
+        command.Path = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory).Parent?.Parent?.Parent?.ToString() ?? "";
+        command.Json = true;
+        Assert.True(Directory.Exists(command.Path), $"Test prerequisite failed: Path '{command.Path}' should exist");
 
         // Act
-        program.OnExecute();
+        command.OnExecute();
 
         // Assert
         Assert.True(IsJson(console.Output));

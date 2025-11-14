@@ -40,6 +40,11 @@ Output as JSON for scripting:
 dotnet overview --json
 ```
 
+Show version (of this tool):
+```bash
+dotnet overview --version
+```
+
 ## Advanced usage
 
 Some examples using PowerShell to filter the JSON output.

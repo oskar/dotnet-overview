@@ -25,6 +25,11 @@ If multiple solutions are found, automatically open the first one:
 dotnet open --first
 ```
 
+Show version (of this tool):
+```bash
+dotnet open --version
+```
+
 ## Upgrade
 
 ```bash

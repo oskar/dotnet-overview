@@ -2,6 +2,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading;
 using Spectre.Console;
 using Spectre.Console.Cli;
@@ -16,6 +17,10 @@ public sealed class OpenSolutionCommand(IAnsiConsole ansiConsole) : Command<Open
         [CommandArgument(0, "[path]")]
         public string? Path { get; set; }
 
+        [Description("Print version of this tool and exit")]
+        [CommandOption("-v|--version")]
+        public bool Version { get; set; }
+
         [Description("Open first solution if multiple are found.")]
         [CommandOption("-f|--first")]
         public bool First { get; set; }
@@ -23,6 +28,14 @@ public sealed class OpenSolutionCommand(IAnsiConsole ansiConsole) : Command<Open
 
     public override int Execute(CommandContext context, Settings settings, CancellationToken cancellationToken)
     {
+        if (settings.Version)
+        {
+            var attribute = Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyInformationalVersionAttribute>();
+            var version = attribute?.InformationalVersion.Split('+')[0] ?? "Unknown";
+            ansiConsole.WriteLine(version);
+            return 0;
+        }
+
         // Calculate absolute path from supplied path and default
         // to current directory if no path is specified.
         var searchPath = string.IsNullOrEmpty(settings.Path)

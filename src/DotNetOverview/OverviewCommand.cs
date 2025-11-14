@@ -15,7 +15,7 @@ public sealed class OverviewCommand(IAnsiConsole ansiConsole) : Command<Overview
 
     public sealed class Settings : CommandSettings
     {
-        [Description("Path to search. Defaults to current working directory.")]
+        [Description("Path to search. Defaults to current directory.")]
         [CommandArgument(0, "[path]")]
         public string? Path { get; set; }
 

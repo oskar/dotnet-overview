@@ -7,10 +7,9 @@ using Spectre.Console;
 
 namespace DotNetOverview;
 
-public class OverviewCommand
+public class OverviewCommand(IAnsiConsole ansiConsole)
 {
     private static readonly JsonSerializerOptions JsonOptions = new() { WriteIndented = true };
-    private readonly IAnsiConsole _console;
 
     [Argument(0, Description = "Path to search. Defaults to current working directory")]
     public string? Path { get; set; }
@@ -30,18 +29,13 @@ public class OverviewCommand
     [Option(Description = "Format the result as JSON")]
     public bool Json { get; set; }
 
-    public OverviewCommand(IAnsiConsole console)
-    {
-        _console = console;
-    }
-
     public void OnExecute()
     {
         if (Version)
         {
             var attribute = Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyInformationalVersionAttribute>();
             var version = attribute?.InformationalVersion.Split('+')[0] ?? "Unknown";
-            _console.WriteLine(version);
+            ansiConsole.WriteLine(version);
             return;
         }
 
@@ -53,7 +47,7 @@ public class OverviewCommand
 
         if (!Directory.Exists(Path))
         {
-            _console.MarkupLine($"Path does not exist: [green]{Path}[/].");
+            ansiConsole.MarkupLine($"Path does not exist: [green]{Path}[/].");
             return;
         }
 
@@ -65,7 +59,7 @@ public class OverviewCommand
 
         if (files.Length == 0)
         {
-            _console.WriteLine("No csproj files found in path.");
+            ansiConsole.WriteLine("No csproj files found in path.");
             return;
         }
 
@@ -79,16 +73,16 @@ public class OverviewCommand
         if (Json)
         {
             var json = JsonSerializer.Serialize(projects, JsonOptions);
-            _console.WriteLine(json);
+            ansiConsole.WriteLine(json);
         }
         else
         {
-            _console.Write(Utilities.FormatProjects(projects, ShowPaths));
+            ansiConsole.Write(Utilities.FormatProjects(projects, ShowPaths));
         }
 
         if (Count)
         {
-            _console.MarkupLine($"Found [green]{files.Length}[/] project(s).");
+            ansiConsole.MarkupLine($"Found [green]{files.Length}[/] project(s).");
         }
     }
 }

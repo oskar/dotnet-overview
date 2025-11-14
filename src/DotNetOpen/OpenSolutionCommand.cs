@@ -14,11 +14,11 @@ public sealed class OpenSolutionCommand(IAnsiConsole ansiConsole) : Command<Open
     {
         [Description("Path to search. Defaults to current directory.")]
         [CommandArgument(0, "[path]")]
-        public string Path { get; init; } = "";
+        public string? Path { get; set; }
 
         [Description("Open first solution if multiple are found.")]
         [CommandOption("-f|--first")]
-        public bool First { get; init; }
+        public bool First { get; set; }
     }
 
     public override int Execute(CommandContext context, Settings settings, CancellationToken cancellationToken)

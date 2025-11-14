@@ -13,8 +13,8 @@ public sealed class OpenSolutionCommand(IAnsiConsole ansiConsole) : Command<Open
     public sealed class Settings : CommandSettings
     {
         [Description("Path to search. Defaults to current directory.")]
-        [CommandArgument(0, "[searchPath]")]
-        public string SearchPath { get; init; } = "";
+        [CommandArgument(0, "[path]")]
+        public string Path { get; init; } = "";
 
         [Description("Open first solution if multiple are found.")]
         [CommandOption("-f|--first")]
@@ -25,9 +25,9 @@ public sealed class OpenSolutionCommand(IAnsiConsole ansiConsole) : Command<Open
     {
         // Calculate absolute path from supplied path and default
         // to current directory if no path is specified.
-        var searchPath = string.IsNullOrEmpty(settings.SearchPath)
+        var searchPath = string.IsNullOrEmpty(settings.Path)
           ? Directory.GetCurrentDirectory()
-          : Path.GetFullPath(settings.SearchPath);
+          : Path.GetFullPath(settings.Path);
 
         var files = Directory.EnumerateFiles(searchPath, "*.sln", new EnumerationOptions
         {
@@ -60,7 +60,7 @@ public sealed class OpenSolutionCommand(IAnsiConsole ansiConsole) : Command<Open
             Title = "Select which to open:",
             PageSize = 15,
             SearchEnabled = true,
-            Converter = path => Path.GetRelativePath(searchPath, path)
+            Converter = filePath => Path.GetRelativePath(searchPath, filePath)
         };
         selectionPrompt.AddChoices(files);
         var selectedSolution = ansiConsole.Prompt(selectionPrompt);

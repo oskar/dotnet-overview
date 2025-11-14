@@ -33,7 +33,7 @@ public class OpenSolutionCommandTests : IDisposable
         var command = new OpenSolutionCommand(console);
         var settings = new OpenSolutionCommand.Settings
         {
-            SearchPath = _tempDirectory
+            Path = _tempDirectory
         };
 
         // Act
@@ -53,7 +53,7 @@ public class OpenSolutionCommandTests : IDisposable
         var command = new OpenSolutionCommand(console);
         var settings = new OpenSolutionCommand.Settings
         {
-            SearchPath = _tempDirectory
+            Path = _tempDirectory
         };
 
         // Act
@@ -75,7 +75,7 @@ public class OpenSolutionCommandTests : IDisposable
         var command = new OpenSolutionCommand(console);
         var settings = new OpenSolutionCommand.Settings
         {
-            SearchPath = _tempDirectory,
+            Path = _tempDirectory,
             First = true
         };
 
@@ -99,7 +99,7 @@ public class OpenSolutionCommandTests : IDisposable
         var command = new OpenSolutionCommand(console);
         var settings = new OpenSolutionCommand.Settings
         {
-            SearchPath = _tempDirectory,
+            Path = _tempDirectory,
             First = false
         };
 
@@ -118,7 +118,7 @@ public class OpenSolutionCommandTests : IDisposable
         var command = new OpenSolutionCommand(console);
         var settings = new OpenSolutionCommand.Settings
         {
-            SearchPath = ""
+            Path = ""
         };
 
         // Act

@@ -1,14 +1,5 @@
 using DotNetOverview;
-using McMaster.Extensions.CommandLineUtils;
-using Microsoft.Extensions.DependencyInjection;
-using Spectre.Console;
+using Spectre.Console.Cli;
 
-var services = new ServiceCollection()
-    .AddSingleton(AnsiConsole.Console)
-    .BuildServiceProvider();
-
-var app = new CommandLineApplication<OverviewCommand>();
-app.Conventions.UseDefaultConventions();
-app.Conventions.UseConstructorInjection(services);
-
-return await app.ExecuteAsync(args);
+var app = new CommandApp<OverviewCommand>();
+return app.Run(args);

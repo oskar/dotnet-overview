@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Threading;
 using Spectre.Console.Testing;
 using Xunit;
 
@@ -15,10 +16,10 @@ public class OverviewCommandTests
 
         var console = new TestConsole();
         var command = new OverviewCommand(console);
-        command.Version = true;
+        var settings = new OverviewCommand.Settings { Version = true };
 
         // Act
-        command.OnExecute();
+        command.Execute(null!, settings, CancellationToken.None);
 
         // Assert
         Assert.Matches(semVerPattern, console.Output);
@@ -30,11 +31,11 @@ public class OverviewCommandTests
         // Arrange
         var console = new TestConsole();
         var command = new OverviewCommand(console);
-        command.Path = "apaththatdoesnotexist";
-        Assert.False(Directory.Exists(command.Path), $"Test prerequisite failed: Path '{command.Path}' should not exist");
+        var settings = new OverviewCommand.Settings { Path = "apaththatdoesnotexist" };
+        Assert.False(Directory.Exists(settings.Path), $"Test prerequisite failed: Path '{settings.Path}' should not exist");
 
         // Act
-        command.OnExecute();
+        command.Execute(null!, settings, CancellationToken.None);
 
         // Assert
         Assert.Equal("Path does not exist: apaththatdoesnotexist.", console.Output.Trim());
@@ -46,11 +47,11 @@ public class OverviewCommandTests
         // Arrange
         var console = new TestConsole();
         var command = new OverviewCommand(console);
-        command.Path = "."; // no csproj files exist in working directory when running tests
-        Assert.True(Directory.Exists(command.Path), $"Test prerequisite failed: Path '{command.Path}' should exist");
+        var settings = new OverviewCommand.Settings { Path = "." }; // no csproj files exist in working directory when running tests
+        Assert.True(Directory.Exists(settings.Path), $"Test prerequisite failed: Path '{settings.Path}' should exist");
 
         // Act
-        command.OnExecute();
+        command.Execute(null!, settings, CancellationToken.None);
 
         // Assert
         Assert.Equal("No csproj files found in path.", console.Output.Trim());
@@ -62,12 +63,15 @@ public class OverviewCommandTests
         // Arrange
         var console = new TestConsole();
         var command = new OverviewCommand(console);
-        command.Path = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory).Parent?.Parent?.Parent?.ToString() ?? "";
-        command.Json = true;
-        Assert.True(Directory.Exists(command.Path), $"Test prerequisite failed: Path '{command.Path}' should exist");
+        var settings = new OverviewCommand.Settings()
+        {
+            Path = new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory).Parent?.Parent?.Parent?.ToString() ?? "",
+            Json = true
+        };
+        Assert.True(Directory.Exists(settings.Path), $"Test prerequisite failed: Path '{settings.Path}' should exist");
 
         // Act
-        command.OnExecute();
+        command.Execute(null!, settings, CancellationToken.None);
 
         // Assert
         Assert.True(IsJson(console.Output));

@@ -224,28 +224,6 @@ public class ProjectParserTests : IDisposable
     }
 
     [Fact]
-    public void Parse_returns_relative_path_with_base_path()
-    {
-        // Arrange
-        var projectContent = """
-      <Project Sdk="Microsoft.NET.Sdk">
-        <PropertyGroup>
-          <TargetFramework>net8.0</TargetFramework>
-        </PropertyGroup>
-      </Project>
-      """;
-
-        var projectPath = CreateTempProjectFile("RelativePathProject.csproj", projectContent);
-
-        // Act
-        var result = new ProjectParser(_tempDirectory).Parse(projectPath);
-
-        // Assert
-        Assert.Equal("RelativePathProject", result.Name);
-        Assert.Equal("RelativePathProject.csproj", result.Path);
-    }
-
-    [Fact]
     public void Parse_supports_empty_properties()
     {
         // Arrange

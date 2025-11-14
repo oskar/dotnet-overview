@@ -7,13 +7,6 @@ namespace DotNetOverview;
 
 public class ProjectParser
 {
-    private readonly string? _basePath;
-
-    public ProjectParser(string? basePath = null)
-    {
-        _basePath = basePath;
-    }
-
     private readonly XNamespace _msbuildNamespace = "http://schemas.microsoft.com/developer/msbuild/2003";
 
     public Project Parse(string projectFilePath)
@@ -26,7 +19,7 @@ public class ProjectParser
 
         var project = new Project
         {
-            Path = string.IsNullOrEmpty(_basePath) ? projectFilePath : Path.GetRelativePath(_basePath, projectFilePath),
+            Path = projectFilePath,
             Name = Path.GetFileNameWithoutExtension(projectFilePath)
         };
 

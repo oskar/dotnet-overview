@@ -1,22 +1,14 @@
-using System.Threading.Tasks;
+using DotNetOverview;
 using McMaster.Extensions.CommandLineUtils;
 using Microsoft.Extensions.DependencyInjection;
 using Spectre.Console;
 
-namespace DotNetOverview;
+var services = new ServiceCollection()
+    .AddSingleton(AnsiConsole.Console)
+    .BuildServiceProvider();
 
-public class Program
-{
-    private static Task<int> Main(string[] args)
-    {
-        var services = new ServiceCollection()
-            .AddSingleton(AnsiConsole.Console)
-            .BuildServiceProvider();
+var app = new CommandLineApplication<OverviewCommand>();
+app.Conventions.UseDefaultConventions();
+app.Conventions.UseConstructorInjection(services);
 
-        var app = new CommandLineApplication<OverviewCommand>();
-        app.Conventions.UseDefaultConventions();
-        app.Conventions.UseConstructorInjection(services);
-
-        return app.ExecuteAsync(args);
-    }
-}
+return await app.ExecuteAsync(args);
